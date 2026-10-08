@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { HeroPortrait } from '../hero/HeroPortrait';
-import { HeroOrbitBadge } from '../hero/HeroOrbitBadge';
-import { HeroAtmosphere } from '../effects/HeroAtmosphere';
-import { gsap } from '../../lib/gsap';
+import React, { useRef, useState, useEffect } from "react";
+import { HeroPortrait } from "../hero/HeroPortrait";
+import { HeroOrbitBadge } from "../hero/HeroOrbitBadge";
+import { HeroAtmosphere } from "../effects/HeroAtmosphere";
+import { gsap } from "../../lib/gsap";
 
 export function Hero() {
   const heroRef = useRef(null);
@@ -10,25 +10,26 @@ export function Hero() {
   const auraRef = useRef(null);
 
   // Subtitle cyber-decode scramble state
-  const originalRole = "SOFTWARE DEVELOPER · AI ENGINEER · CREATIVE TECHNOLOGIST";
+  const originalRole =
+    "SOFTWARE DEVELOPER · AI ENGINEER · CREATIVE TECHNOLOGIST";
   const [scrambleRole, setScrambleRole] = useState(originalRole);
   const scrambleIntervalRef = useRef(null);
 
   const triggerScramble = () => {
-    const chars = '!<>-_/[]{}=+*^?#01~ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const chars = "!<>-_/[]{}=+*^?#01~ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let iteration = 0;
     clearInterval(scrambleIntervalRef.current);
 
     scrambleIntervalRef.current = setInterval(() => {
       setScrambleRole(
         originalRole
-          .split('')
+          .split("")
           .map((char, index) => {
-            if (char === ' ' || char === '·') return char;
+            if (char === " " || char === "·") return char;
             if (index < iteration) return originalRole[index];
             return chars[Math.floor(Math.random() * chars.length)];
           })
-          .join('')
+          .join(""),
       );
 
       if (iteration >= originalRole.length) {
@@ -43,10 +44,22 @@ export function Hero() {
     const hero = heroRef.current;
     if (!hero) return;
 
-    const quickTitleX = gsap.quickTo(titleRef.current, 'x', { duration: 0.9, ease: 'power2.out' });
-    const quickTitleY = gsap.quickTo(titleRef.current, 'y', { duration: 0.9, ease: 'power2.out' });
-    const quickAuraX = gsap.quickTo(auraRef.current, 'x', { duration: 1.2, ease: 'power2.out' });
-    const quickAuraY = gsap.quickTo(auraRef.current, 'y', { duration: 1.2, ease: 'power2.out' });
+    const quickTitleX = gsap.quickTo(titleRef.current, "x", {
+      duration: 0.9,
+      ease: "power2.out",
+    });
+    const quickTitleY = gsap.quickTo(titleRef.current, "y", {
+      duration: 0.9,
+      ease: "power2.out",
+    });
+    const quickAuraX = gsap.quickTo(auraRef.current, "x", {
+      duration: 1.2,
+      ease: "power2.out",
+    });
+    const quickAuraY = gsap.quickTo(auraRef.current, "y", {
+      duration: 1.2,
+      ease: "power2.out",
+    });
 
     const handleMouseMove = (e) => {
       const rect = hero.getBoundingClientRect();
@@ -60,16 +73,16 @@ export function Hero() {
       quickAuraY(y * 40);
     };
 
-    hero.addEventListener('mousemove', handleMouseMove);
+    hero.addEventListener("mousemove", handleMouseMove);
     return () => {
-      hero.removeEventListener('mousemove', handleMouseMove);
+      hero.removeEventListener("mousemove", handleMouseMove);
       clearInterval(scrambleIntervalRef.current);
     };
   }, []);
 
   const scrollToProjects = () => {
-    const el = document.getElementById('projects');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById("projects");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -88,10 +101,18 @@ export function Hero() {
 
       {/* 3. Minimalist Architectural Solvana Crosshairs in 4 Corners (Clean, unobtrusive) */}
       <div className="absolute inset-4 sm:inset-6 pointer-events-none z-5">
-        <span className="absolute top-2 left-2 font-mono text-[11px] text-fg-dim font-light select-none">+</span>
-        <span className="absolute top-2 right-2 font-mono text-[11px] text-fg-dim font-light select-none">+</span>
-        <span className="absolute bottom-2 left-2 font-mono text-[11px] text-fg-dim font-light select-none">+</span>
-        <span className="absolute bottom-2 right-2 font-mono text-[11px] text-fg-dim font-light select-none">+</span>
+        <span className="absolute top-2 left-2 font-mono text-[11px] text-fg-dim font-light select-none">
+          +
+        </span>
+        <span className="absolute top-2 right-2 font-mono text-[11px] text-fg-dim font-light select-none">
+          +
+        </span>
+        <span className="absolute bottom-2 left-2 font-mono text-[11px] text-fg-dim font-light select-none">
+          +
+        </span>
+        <span className="absolute bottom-2 right-2 font-mono text-[11px] text-fg-dim font-light select-none">
+          +
+        </span>
       </div>
 
       {/* 4. Top Row: Rotating Circular SVG Orbit Badge (Signature element, unobtrusive) */}
@@ -115,7 +136,7 @@ export function Hero() {
         <h1 className="font-display font-black text-[13.5vw] sm:text-[14.2vw] leading-[0.82] tracking-[-0.04em] text-fg whitespace-nowrap select-none flex justify-center items-center gap-[0.22em] drop-shadow-sm">
           {/* ASHOK letters with individual elastic bounce */}
           <span className="inline-flex">
-            {['A', 'S', 'H', 'O', 'K'].map((ch, idx) => (
+            {["A", "S", "H", "O", "K"].map((ch, idx) => (
               <span
                 key={`first-${idx}`}
                 className="inline-block transition-colors duration-200 hover:text-accent cursor-pointer select-none"
@@ -123,7 +144,13 @@ export function Hero() {
                   gsap.fromTo(
                     e.currentTarget,
                     { rotate: idx % 2 === 0 ? -12 : 12, y: -18, scale: 1.14 },
-                    { rotate: 0, y: 0, scale: 1, duration: 0.9, ease: 'elastic.out(1.2, 0.3)' }
+                    {
+                      rotate: 0,
+                      y: 0,
+                      scale: 1,
+                      duration: 0.9,
+                      ease: "elastic.out(1.2, 0.3)",
+                    },
                   );
                 }}
               >
@@ -134,7 +161,7 @@ export function Hero() {
 
           {/* KUMAR letters with individual elastic bounce */}
           <span className="inline-flex">
-            {['K', 'U', 'M', 'A', 'R'].map((ch, idx) => (
+            {["K", "U", "M", "A", "R"].map((ch, idx) => (
               <span
                 key={`last-${idx}`}
                 className="inline-block transition-colors duration-200 hover:text-accent cursor-pointer select-none"
@@ -142,7 +169,13 @@ export function Hero() {
                   gsap.fromTo(
                     e.currentTarget,
                     { rotate: idx % 2 === 0 ? 12 : -12, y: -18, scale: 1.14 },
-                    { rotate: 0, y: 0, scale: 1, duration: 0.9, ease: 'elastic.out(1.2, 0.3)' }
+                    {
+                      rotate: 0,
+                      y: 0,
+                      scale: 1,
+                      duration: 0.9,
+                      ease: "elastic.out(1.2, 0.3)",
+                    },
                   );
                 }}
               >
@@ -181,7 +214,9 @@ export function Hero() {
         {/* Left Status Indicator */}
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="text-fg font-medium">AVAILABLE FOR SELECT OPPORTUNITIES</span>
+          <span className="text-fg font-medium">
+            AVAILABLE FOR SELECT OPPORTUNITIES
+          </span>
           <span className="text-fg-dim hidden sm:inline">// 2026</span>
         </div>
 
