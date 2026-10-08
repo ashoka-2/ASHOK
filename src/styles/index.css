@@ -131,3 +131,8 @@ html, body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
+
+/* When 3D WebGL Avatar is loaded and active, hide the fallback 2D portrait */
+html.av .port {
+  display: none !important;
+}

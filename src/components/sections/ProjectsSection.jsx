@@ -11,9 +11,13 @@ import { Button } from '../ui/Button';
 export function ProjectsSection() {
   const dispatch = useDispatch();
   const projectViewMode = useSelector((state) => state.ui.projectViewMode);
-
   return (
-    <section className="w-full relative py-20 select-none">
+    <section
+      data-avatar-shot="far"
+      data-avatar-side="left"
+      data-avatar-pose="idle"
+      className="w-full relative py-20 select-none z-20"
+    >
       {/* Top Header & View Switcher */}
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>

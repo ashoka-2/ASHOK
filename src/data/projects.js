@@ -1,37 +1,5 @@
 export const projects = [
   {
-    slug: "snap2bill",
-    index: "01",
-    title: "Snap2Bill",
-    category: ["AI / Computer Vision", "Fintech / SaaS", "Flutter"],
-    oneLiner: "AI-powered retail billing, instant product recognition from photos & social shopkeeper ecosystem.",
-    overview: "Snap2Bill revolutionizes retail operations for physical shopkeepers. Combining on-device and cloud computer vision with instant POS invoicing, it enables instant item recognition directly from camera captures, automated GST calculations, inventory reconciliation, customer ledger tracking, and an Instagram-style community discovery feed for merchants.",
-    role: "Lead Full Stack & Mobile Engineer",
-    year: "2025 - 2026",
-    status: "Completed & Active",
-    features: [
-      "AI camera product recognition & automatic barcode/photo classification",
-      "One-click GST and non-GST compliant invoice generation with instant PDF export",
-      "Instagram-style merchant product explore feed with likes, bookmarks & seller follows",
-      "Real-time shopkeeper-to-customer messaging & notification infrastructure via WebSockets",
-      "Full offline-first caching for seamless continuous billing during network interruptions",
-      "Automated stock level depletion warnings and vendor reorder recommendations",
-      "Comprehensive multi-tenant admin management portal with revenue analytics",
-      "Custom machine learning dataset training workflow for new shop items"
-    ],
-    stack: ["Flutter", "Django", "Python", "Computer Vision", "MySQL", "SQLite", "WebSockets"],
-    concepts: ["Computer Vision POS", "Real-Time Invoicing", "Retail Social Graph", "Offline Sync"],
-    links: {
-      github: "https://github.com/ashoka-2/snap2bill",
-      live: ""
-    },
-    cover: {
-      dark: "/images/projects/snap2bill-dark.webp",
-      light: "/images/projects/snap2bill-light.webp"
-    },
-    accent: "#39E600"
-  },
-  {
     slug: "parsu",
     index: "02",
     title: "Parsu AI",
@@ -155,6 +123,38 @@ export const projects = [
       light: "/images/projects/chatme-light.webp"
     },
     accent: "#06B6D4"
+  },
+   {
+    slug: "snap2bill",
+    index: "01",
+    title: "Snap2Bill",
+    category: ["AI / Computer Vision", "Fintech / SaaS", "Flutter"],
+    oneLiner: "AI-powered retail billing, instant product recognition from photos & social shopkeeper ecosystem.",
+    overview: "Snap2Bill revolutionizes retail operations for physical shopkeepers. Combining on-device and cloud computer vision with instant POS invoicing, it enables instant item recognition directly from camera captures, automated GST calculations, inventory reconciliation, customer ledger tracking, and an Instagram-style community discovery feed for merchants.",
+    role: "Lead Full Stack & Mobile Engineer",
+    year: "2025 - 2026",
+    status: "Completed & Active",
+    features: [
+      "AI camera product recognition & automatic barcode/photo classification",
+      "One-click GST and non-GST compliant invoice generation with instant PDF export",
+      "Instagram-style merchant product explore feed with likes, bookmarks & seller follows",
+      "Real-time shopkeeper-to-customer messaging & notification infrastructure via WebSockets",
+      "Full offline-first caching for seamless continuous billing during network interruptions",
+      "Automated stock level depletion warnings and vendor reorder recommendations",
+      "Comprehensive multi-tenant admin management portal with revenue analytics",
+      "Custom machine learning dataset training workflow for new shop items"
+    ],
+    stack: ["Flutter", "Django", "Python", "Computer Vision", "MySQL", "SQLite", "WebSockets"],
+    concepts: ["Computer Vision POS", "Real-Time Invoicing", "Retail Social Graph", "Offline Sync"],
+    links: {
+      github: "https://github.com/ashoka-2/snap2bill",
+      live: ""
+    },
+    cover: {
+      dark: "/images/projects/snap2bill-dark.webp",
+      light: "/images/projects/snap2bill-light.webp"
+    },
+    accent: "#39E600"
   },
   {
     slug: "moodify",

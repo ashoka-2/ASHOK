@@ -45,7 +45,12 @@ export function LabSection() {
   ];
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 py-24 border-t border-line/40 select-none">
+    <section
+      data-avatar-shot="waist"
+      data-avatar-side="right"
+      data-avatar-pose="think"
+      className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 py-24 border-t border-line/40 select-none relative z-20"
+    >
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
         <div>
           <SectionLabel number="02" label="EXPERIMENTAL LAB" />

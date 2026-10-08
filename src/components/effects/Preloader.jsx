@@ -26,37 +26,76 @@ export function Preloader() {
       return;
     }
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        dispatch(setPreloaderDone(true));
-        startLenis();
-      },
-    });
-
+    let isExiting = false;
     const progressObj = { value: 0 };
 
-    tl.to(progressObj, {
-      value: 100,
-      duration: 1.8,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        setProgress(Math.floor(progressObj.value));
-      },
-    })
-      .to(textRef.current, {
-        scale: 1.08,
-        letterSpacing: '0.12em',
-        duration: 0.4,
-        ease: 'power3.out',
-      })
-      .to(containerRef.current, {
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-        duration: 0.9,
-        ease: 'power4.inOut',
+    const playExit = () => {
+      if (isExiting) return;
+      isExiting = true;
+
+      const exitTl = gsap.timeline({
+        onComplete: () => {
+          dispatch(setPreloaderDone(true));
+          startLenis();
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('preloader:complete'));
+          }
+        },
       });
 
+      exitTl
+        .to(progressObj, {
+          value: 100,
+          duration: 0.35,
+          ease: 'power2.out',
+          onUpdate: () => setProgress(Math.floor(progressObj.value)),
+        })
+        .to(textRef.current, {
+          scale: 1.08,
+          letterSpacing: '0.12em',
+          duration: 0.35,
+          ease: 'power3.out',
+        })
+        .to(containerRef.current, {
+          opacity: 0,
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+          duration: 0.7,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            if (containerRef.current) {
+              containerRef.current.style.display = 'none';
+              containerRef.current.style.pointerEvents = 'none';
+            }
+          },
+        });
+    };
+
+    const handleAvatarProgress = (e) => {
+      const ratio = typeof e.detail === 'number' ? e.detail : 1;
+      const target = Math.min(100, Math.floor(ratio * 100));
+      gsap.to(progressObj, {
+        value: target,
+        duration: 0.4,
+        ease: 'power1.out',
+        onUpdate: () => setProgress(Math.floor(progressObj.value)),
+        onComplete: () => {
+          if (target >= 100) {
+            playExit();
+          }
+        },
+      });
+    };
+
+    window.addEventListener('avatar:progress', handleAvatarProgress);
+
+    // Fallback timer: ensure preloader finishes after at most 2.4s even if assets load instantly or offline
+    const fallbackTimer = setTimeout(() => {
+      playExit();
+    }, 2400);
+
     return () => {
-      tl.kill();
+      window.removeEventListener('avatar:progress', handleAvatarProgress);
+      clearTimeout(fallbackTimer);
     };
   }, [dispatch, preloaderDone]);
 
@@ -64,6 +103,7 @@ export function Preloader() {
 
   return (
     <div
+      id="preloader"
       ref={containerRef}
       className="fixed inset-0 z-[99998] bg-bg flex flex-col items-center justify-center select-none"
       style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}

@@ -9,6 +9,7 @@ import { GooeyFilter } from '../effects/GooeyFilter';
 import { PullCord } from '../effects/PullCord';
 import { Preloader } from '../effects/Preloader';
 import { PageTransition } from '../effects/PageTransition';
+import { AvatarCanvas } from '../../features/avatar/AvatarCanvas';
 
 export function PageShell({ children, showFooter = true }) {
   const location = useLocation();
@@ -16,6 +17,7 @@ export function PageShell({ children, showFooter = true }) {
 
   return (
     <div className="relative min-h-screen bg-bg text-fg selection:bg-accent selection:text-black overflow-x-clip flex flex-col justify-between">
+      {isHome && <AvatarCanvas />}
       <Preloader />
       <Grain />
       <GooeyFilter />

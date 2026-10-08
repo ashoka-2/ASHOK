@@ -263,9 +263,12 @@ export function TechPhysics() {
 
   return (
     <section
+      data-avatar-shot="full"
+      data-avatar-side="left"
+      data-avatar-pose="present"
       onMouseEnter={triggerDrop}
       onTouchStart={triggerDrop}
-      className="w-full relative py-20 select-none overflow-hidden border-t border-line"
+      className="w-full relative py-20 select-none overflow-hidden border-t border-line z-20"
     >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
