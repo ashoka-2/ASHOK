@@ -51,6 +51,8 @@ export function HeroDepthScene({ isHovered = false }) {
       uRadius: { value: 0.22 },                               // Lens radius in UV space (~140px)
       uAspect: { value: width / height },                     // Geometric aspect ratio
       uTime: { value: 0.0 },
+      uRippleTime: { value: 2.0 },                            // Click ripple progress (0 -> 1+)
+      uRippleCenter: { value: new THREE.Vector2(0.5, 0.5) },
     };
 
     const vertexShader = `
@@ -73,13 +75,23 @@ export function HeroDepthScene({ isHovered = false }) {
       uniform float uRadius;
       uniform float uAspect;
       uniform float uTime;
+      uniform float uRippleTime;
+      uniform vec2 uRippleCenter;
       varying vec2 vUv;
 
       void main() {
         // 1. Existing 2.5D Depth Parallax across the entire portrait (ALWAYS ACTIVE)
         float depth = texture2D(uDepthTexture, vUv).r;
         vec2 parallax = uMouse * (depth * 0.038);
-        vec2 uv = clamp(vUv + parallax, 0.001, 0.999);
+
+        // Interactive holographic click ripple wave
+        vec2 rDiff = (vUv - uRippleCenter);
+        rDiff.x *= uAspect;
+        float rDist = length(rDiff);
+        float wave = sin(rDist * 40.0 - uRippleTime * 18.0) * smoothstep(0.4, 0.0, abs(rDist - uRippleTime * 0.4)) * max(0.0, 1.0 - uRippleTime * 1.5);
+        vec2 rippleDisp = normalize(vUv - uRippleCenter + 0.0001) * wave * 0.015;
+
+        vec2 uv = clamp(vUv + parallax + rippleDisp, 0.001, 0.999);
 
         // Sample base portrait
         vec4 baseColor = texture2D(uMainTexture, uv);
@@ -117,7 +129,7 @@ export function HeroDepthScene({ isHovered = false }) {
         // 5. Embedded subtle tech particles and code matrix grid inside lens
         float grid = step(0.93, fract(morphUv.x * 50.0)) * step(0.93, fract(morphUv.y * 50.0));
         float noise = fract(sin(dot(morphUv + fract(uTime * 0.25), vec2(12.9898, 78.233))) * 43758.5453);
-        vec3 particleAura = vec3(0.22, 0.90, 0.0) * (grid * 0.3 + noise * 0.12) * lensMask;
+        vec3 particleAura = vec3(0.0, 0.90, 0.5) * (grid * 0.3 + noise * 0.12) * lensMask;
 
         // Interactive rim light mask inside lens
         float rim = texture2D(uLightTexture, uv).r * lensMask * 0.3;
@@ -126,7 +138,7 @@ export function HeroDepthScene({ isHovered = false }) {
         // OUTSIDE lens (lensMask == 0): 100% original portrait + depth parallax!
         // INSIDE lens: reveals digital morph, local displacement, code & particles!
         vec4 finalColor = mix(baseColor, digitalColor, lensMask);
-        finalColor.rgb += vec3(0.22, 0.90, 0.0) * rim + particleAura;
+        finalColor.rgb += vec3(0.0, 0.90, 0.5) * rim + particleAura;
         finalColor.a = baseColor.a;
 
         gl_FragColor = finalColor;
@@ -171,8 +183,45 @@ export function HeroDepthScene({ isHovered = false }) {
       uniforms.uTargetMouse.value.set(0, 0);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    const handleClick = (e) => {
+      const rect = container.getBoundingClientRect();
+      const uvX = (e.clientX - rect.left) / rect.width;
+      const uvY = 1.0 - ((e.clientY - rect.top) / rect.height);
+      if (uvX >= 0.0 && uvX <= 1.0 && uvY >= 0.0 && uvY <= 1.0) {
+        uniforms.uRippleTime.value = 0.0;
+        uniforms.uRippleCenter.value.set(uvX, uvY);
+      }
+    };
+
+    // Mobile touch interaction
+    const handleTouchMove = (e) => {
+      if (!e.touches || !e.touches[0]) return;
+      const t = e.touches[0];
+      const globalX = (t.clientX / window.innerWidth) * 2 - 1;
+      const globalY = -((t.clientY / window.innerHeight) * 2 - 1);
+      uniforms.uTargetMouse.value.set(globalX * 1.3, globalY * 1.3);
+
+      const rect = container.getBoundingClientRect();
+      const uvX = (t.clientX - rect.left) / rect.width;
+      const uvY = 1.0 - ((t.clientY - rect.top) / rect.height);
+      const isInside = uvX >= 0.0 && uvX <= 1.0 && uvY >= 0.0 && uvY <= 1.0;
+
+      if (isInside) {
+        uniforms.uTargetCursorUV.value.set(uvX, uvY);
+        uniforms.uTargetMaskIntensity.value = 1.0;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      uniforms.uTargetMaskIntensity.value = 0.0;
+      uniforms.uTargetMouse.value.set(0, 0);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('click', handleClick);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd);
 
     // Animation Loop
     let animationFrameId;
@@ -183,6 +232,10 @@ export function HeroDepthScene({ isHovered = false }) {
       const delta = (currentTime - lastTime) / 1000;
       lastTime = currentTime;
       uniforms.uTime.value += delta;
+
+      if (uniforms.uRippleTime.value < 2.0) {
+        uniforms.uRippleTime.value += delta;
+      }
 
       // Smooth inertia for global 2.5D depth parallax
       uniforms.uMouse.value.lerp(uniforms.uTargetMouse.value, 0.06);
@@ -213,6 +266,9 @@ export function HeroDepthScene({ isHovered = false }) {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('click', handleClick);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
