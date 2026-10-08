@@ -39,7 +39,10 @@ export function Intro() {
   return (
     <section
       ref={sectionRef}
-      className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 py-24 sm:py-36 flex flex-col justify-center border-t border-line/40 select-none"
+      data-avatar-shot="waist"
+      data-avatar-side="right"
+      data-avatar-pose="present"
+      className="w-full max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 py-24 sm:py-36 flex flex-col justify-center border-t border-line/40 select-none relative z-20"
     >
       <SectionLabel number="00" label="PHILOSOPHY & CRAFT" />
 

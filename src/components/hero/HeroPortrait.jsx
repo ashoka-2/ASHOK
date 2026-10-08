@@ -1,47 +1,37 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { ParticlePortrait } from './ParticlePortrait';
 import { gsap } from '../../lib/gsap';
 
 /**
  * HeroPortrait
- * High-definition cutout portrait of Ashok Kumar with:
- * - Animated cybernetic SVG orbit rings & holographic halo behind head
- * - Animated SVG laser scanline sweeping vertically
- * - 3D perspective mouse parallax tilt
- * - Localized cursor developer-morph mask on hover
- * - Interactive corner tech brackets
+ * High-definition interactive particle portrait of Ashok Kumar with:
+ * - Real RGB pixel sampling of Ashok's true head & facial features
+ * - Interactive pointer swirl, repulsion, and click shockwave ripple
+ * - Cybernetic SVG orbit rings & holographic halo behind head
+ * - Sci-fi corner framing brackets
+ * - Subtle 3D perspective mouse parallax tilt
  */
 export function HeroPortrait() {
   const containerRef = useRef(null);
   const portraitRef = useRef(null);
-  const hoverLayerRef = useRef(null);
-  const laserRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // GSAP quickTo setters for 3D parallax tilt
+    // GSAP quickTo setters for subtle 3D parallax tilt
     const quickTiltX = gsap.quickTo(portraitRef.current, 'rotateX', { duration: 0.8, ease: 'power2.out' });
     const quickTiltY = gsap.quickTo(portraitRef.current, 'rotateY', { duration: 0.8, ease: 'power2.out' });
     const quickTranslateX = gsap.quickTo(portraitRef.current, 'x', { duration: 0.8, ease: 'power2.out' });
 
     const handlePointerMove = (e) => {
-      // 1. Global 3D tilt across screen
       const globalX = (e.clientX / window.innerWidth - 0.5) * 2;
       const globalY = (e.clientY / window.innerHeight - 0.5) * 2;
-      quickTiltY(globalX * 9);
-      quickTiltX(-globalY * 7);
-      quickTranslateX(globalX * 12);
-
-      // 2. Localized cursor mask coordinates for developer-morph overlay
-      if (hoverLayerRef.current) {
-        const rect = container.getBoundingClientRect();
-        const localX = e.clientX - rect.left;
-        const localY = e.clientY - rect.top;
-        hoverLayerRef.current.style.setProperty('--mx', `${localX}px`);
-        hoverLayerRef.current.style.setProperty('--my', `${localY}px`);
-      }
+      quickTiltY(globalX * 6);
+      quickTiltX(-globalY * 4);
+      quickTranslateX(globalX * 8);
     };
 
     const handlePointerLeave = () => {
@@ -153,78 +143,31 @@ export function HeroPortrait() {
         className="relative w-full h-full flex items-end justify-center pointer-events-auto will-change-transform z-10"
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Layer A: High-Definition Primary Cutout Portrait */}
-        <img
-          src="/assets/portrait/hero-portrait-main.png"
-          alt="Ashok Kumar"
-          className="w-full h-full object-contain object-bottom pointer-events-none select-none transition-transform duration-300"
-          style={{
-            filter: 'drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35))',
-          }}
-          draggable="false"
-        />
-
-        {/* Layer B: Digital Developer Morph Reveal (Centered at cursor coordinates on hover) */}
-        <div
-          ref={hoverLayerRef}
-          className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-            isHovered ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{
-            maskImage: 'radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%), #000 40%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%), #000 40%, transparent 100%)',
-          }}
-        >
+        {/* Layer A: Initial Main Portrait Fallback (fades out as particle engine takes over) */}
+        {!isLoaded && (
           <img
-            src="/assets/portrait/hero-portrait-hover.png"
-            alt="Ashok Kumar Digital Morph"
-            className="w-full h-full object-contain object-bottom pointer-events-none select-none"
+            src="/assets/portrait/hero-portrait-main.png"
+            alt="Ashok Kumar"
+            className="w-full h-full object-contain object-bottom pointer-events-none select-none transition-opacity duration-500 opacity-100"
             style={{
-              filter: 'drop-shadow(0 0 20px rgba(0, 230, 127, 0.45)) contrast(1.08) saturate(1.15)',
+              filter: 'drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35))',
             }}
             draggable="false"
           />
-        </div>
+        )}
 
-        {/* 3. Futuristic Animated SVG Laser Scanline */}
+        {/* Layer B: Interactive Particle Portrait Canvas */}
+        <ParticlePortrait
+          onLoaded={() => setIsLoaded(true)}
+          className={`z-20 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+
+        {/* 3. Sci-Fi Hologram Corner Target Brackets framing Ashok */}
         <div
-          ref={laserRef}
-          className={`absolute left-0 right-0 pointer-events-none z-20 transition-opacity duration-300 ${
-            isHovered ? 'opacity-100' : 'opacity-60'
+          className={`absolute inset-4 pointer-events-none transition-all duration-300 z-30 ${
+            isHovered ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
           }`}
-          style={{
-            top: '25%',
-            animation: 'heroLaserScan 3.6s ease-in-out infinite alternate',
-          }}
         >
-          <svg className="w-full h-4 overflow-visible" viewBox="0 0 400 16" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="laserGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="var(--accent)" stopOpacity="0" />
-                <stop offset="20%" stopColor="var(--accent)" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="var(--accent)" stopOpacity="1" />
-                <stop offset="80%" stopColor="var(--accent-blue)" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="var(--accent-blue)" stopOpacity="0" />
-              </linearGradient>
-              <filter id="laserGlow">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-            {/* The laser beam line */}
-            <line x1="0" y1="8" x2="400" y2="8" stroke="url(#laserGrad)" strokeWidth="2" filter="url(#laserGlow)" />
-            {/* Center target laser dot */}
-            <circle cx="200" cy="8" r="3" fill="var(--accent)" filter="url(#laserGlow)" />
-          </svg>
-        </div>
-
-        {/* 4. Sci-Fi Hologram Corner Target Brackets framing Ashok */}
-        <div className={`absolute inset-4 pointer-events-none transition-all duration-300 ${
-          isHovered ? 'opacity-100 scale-100' : 'opacity-40 scale-95'
-        }`}>
           {/* Top-Left Bracket */}
           <svg className="absolute top-2 left-2 w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M2 10V2h8" />
@@ -243,14 +186,6 @@ export function HeroPortrait() {
           </svg>
         </div>
       </div>
-
-      {/* Global CSS keyframes for the laser scanline */}
-      <style>{`
-        @keyframes heroLaserScan {
-          0% { top: 18%; }
-          100% { top: 78%; }
-        }
-      `}</style>
     </div>
   );
 }

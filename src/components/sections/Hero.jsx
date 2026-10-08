@@ -1,3 +1,4 @@
+// LEGACY HERO — kept, no longer used
 import React, { useRef, useState, useEffect } from "react";
 import { HeroPortrait } from "../hero/HeroPortrait";
 import { HeroOrbitBadge } from "../hero/HeroOrbitBadge";

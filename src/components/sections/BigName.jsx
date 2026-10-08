@@ -45,10 +45,13 @@ export function BigName() {
   return (
     <section
       ref={containerRef}
+      data-avatar-shot="full"
+      data-avatar-side="center"
+      data-avatar-pose="wave"
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full py-8 sm:py-12 overflow-hidden select-none flex items-center justify-center border-t border-line/40"
+      className="relative w-full py-8 sm:py-12 overflow-hidden select-none flex items-center justify-center border-t border-line/40 z-20"
     >
       <div className="w-full max-w-[1440px] px-4 text-center cursor-default">
         {/* Desktop Version: Full Name */}
