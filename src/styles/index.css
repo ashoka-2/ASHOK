@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0A0A0B;
+  --bg-elev: #141417;
+  --bg-surface: #1C1C20;
+  --fg: #F2F1EE;
+  --fg-muted: rgba(242, 241, 238, 0.68);
+  --fg-dim: rgba(242, 241, 238, 0.42);
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.28);
+
+  --accent: #39E600;
+  --accent-hover: #45ff05;
+  --accent-text: #39E600;
+  --accent-on: #0A0A0B;
+  --accent-soft: rgba(57, 230, 0, 0.14);
+  --accent-border: rgba(57, 230, 0, 0.35);
+  --accent-blue: #2D6BFF;
+
+  --surface-glass: rgba(20, 20, 23, 0.72);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --grain-opacity: 0.05;
+
+  --shadow-card: 0 24px 50px -15px rgba(0, 0, 0, 0.8);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #F2F1EE;
+  --bg-elev: #FFFFFF;
+  --bg-surface: #E6E4DE;
+  --fg: #0A0A0B;
+  --fg-muted: rgba(10, 10, 11, 0.68);
+  --fg-dim: rgba(10, 10, 11, 0.42);
+  --line: rgba(10, 10, 11, 0.14);
+  --line-strong: rgba(10, 10, 11, 0.28);
+
+  --accent: #1E9E00;
+  --accent-hover: #188000;
+  --accent-text: #188000;
+  --accent-on: #FFFFFF;
+  --accent-soft: rgba(30, 158, 0, 0.14);
+  --accent-border: rgba(30, 158, 0, 0.35);
+  --accent-blue: #1A53E0;
+
+  --surface-glass: rgba(255, 255, 255, 0.82);
+  --surface-hover: rgba(0, 0, 0, 0.04);
+  --grain-opacity: 0.035;
+
+  --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-bg-surface: var(--bg-surface);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-accent-on: var(--accent-on);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-border: var(--accent-border);
+  --color-accent-blue: var(--accent-blue);
+
+  --font-display: "Bricolage Grotesque", -apple-system, sans-serif;
+  --font-serif: "Instrument Serif", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-card: 32px;
+  --radius-lg: 40px;
+  --radius-pill: 9999px;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  background-color: var(--bg);
+  color: var(--fg);
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Noise overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 900;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Outline Big Text */
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--fg);
+  color: transparent;
+  transition: color 0.3s ease;
+}
+
+/* Smooth Circular Theme Wave */
+#theme-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  pointer-events: none;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
