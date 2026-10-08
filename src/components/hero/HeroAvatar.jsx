@@ -82,6 +82,15 @@ export function HeroAvatar() {
           </div>
         </div>
 
+        {/* Fallback 2D portrait visible only before 3D avatar loads or on weak devices */}
+        <div className="port absolute left-1/2 bottom-0 -translate-x-1/2 w-full max-w-[520px] pointer-events-none z-[10] flex justify-center items-end">
+          <img
+            src="/assets/portrait/hero-portrait-main.png"
+            alt={profile.name}
+            className="w-auto max-h-[72vh] object-contain select-none"
+          />
+        </div>
+
         {/* 3. Bottom Minimal Scroll Cue & Availability (z-[30]) */}
         <div
           ref={scrollCueRef}
@@ -105,31 +114,6 @@ export function HeroAvatar() {
           </div>
         </div>
       </div>
-
-      {/* 4. Three Scroll Beats — Directing Camera Framing along 300vh */}
-      {/* Beat 1: First load cinematic face close-up */}
-      <i
-        data-avatar-shot="face"
-        data-avatar-side="center"
-        data-avatar-pose="idle"
-        className="absolute top-0 pointer-events-none"
-      />
-
-      {/* Beat 2: Intermediate bust shot pulling back */}
-      <i
-        data-avatar-shot="bust"
-        data-avatar-side="center"
-        data-avatar-pose="idle"
-        className="absolute top-[100vh] pointer-events-none"
-      />
-
-      {/* Beat 3: Full body reveal head-to-toe with presentation gesture */}
-      <i
-        data-avatar-shot="full"
-        data-avatar-side="center"
-        data-avatar-pose="present"
-        className="absolute top-[200vh] pointer-events-none"
-      />
     </section>
   );
 }

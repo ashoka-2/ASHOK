@@ -13,18 +13,27 @@ d:/ASHOK/
 │   └── CONTENT_GUIDE.md        # Single-source data documentation
 ├── public/
 │   ├── favicon.svg             # Minimalist AK brand icon
+│   ├── models/
+│   │   └── ashok.glb           # Single canonical 3D avatar GLB model (8 MB)
 │   ├── assets/
-│   │   ├── portrait/           # Single source of truth: main cutout, developer morph, depth, displacement, interaction, aura
+│   │   ├── portrait/           # Cutout fallback & branding assets
 │   │   └── branding/           # Vector ashok-logo.svg & ashok-logo.png
 │   └── images/
 │       ├── projects/           # 16 tailored dark/light mockups
 │       └── lab/                # 8 interactive lab preview covers
 ├── src/
+│   ├── features/
+│   │   └── avatar/             # 3D Avatar System (One model, one system)
+│   │       ├── AvatarCanvas.jsx # WebGL canvas wrapper with #av
+│   │       ├── AvatarScene.js  # Three.js r186 scene, studio lighting, materials, viewport buffer sync, scroll director
+│   │       ├── avatarConfig.js # Mathematical shot calibrations, poses, emotes, and tuning
+│   │       ├── rig.js          # Procedural bone hierarchy, A-pose, breathing, scroll lean, gaze tracking
+│   │       └── interactions.js # Face click (angry), body click (wave), double-click (wink), UI hover gaze
 │   ├── components/
 │   │   ├── ui/                 # Button, Tag, GlowKey, SectionLabel, Divider, GithubIcon
 │   │   ├── layout/             # Navbar (with IST clock), MenuOverlay (fullscreen), Footer, PageShell
-│   │   ├── effects/            # PullCord (blurred wave theme switch), PageTransition, Cursor, Grain, GooeyFilter, Preloader
-│   │   ├── three/              # HeroDepthScene (WebGL fragment shader 2.5D depth + glitch developer morph)
+│   │   ├── effects/            # PullCord, PageTransition, Cursor, Grain, GooeyFilter, Preloader
+│   │   ├── hero/               # HeroAvatar (300vh runway + fallback portrait)
 │   │   ├── sections/           # Hero, Intro, ProjectsSection, LabSection, TechPhysics (Matter.js), BigName
 │   │   └── projects/           # ProjectCard, ProjectStack, ProjectHorizontal
 │   ├── data/

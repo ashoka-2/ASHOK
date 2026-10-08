@@ -37,6 +37,9 @@ export function Preloader() {
         onComplete: () => {
           dispatch(setPreloaderDone(true));
           startLenis();
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('preloader:complete'));
+          }
         },
       });
 
@@ -54,9 +57,16 @@ export function Preloader() {
           ease: 'power3.out',
         })
         .to(containerRef.current, {
+          opacity: 0,
           clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-          duration: 0.85,
-          ease: 'power4.inOut',
+          duration: 0.7,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            if (containerRef.current) {
+              containerRef.current.style.display = 'none';
+              containerRef.current.style.pointerEvents = 'none';
+            }
+          },
         });
     };
 
@@ -93,6 +103,7 @@ export function Preloader() {
 
   return (
     <div
+      id="preloader"
       ref={containerRef}
       className="fixed inset-0 z-[99998] bg-bg flex flex-col items-center justify-center select-none"
       style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
