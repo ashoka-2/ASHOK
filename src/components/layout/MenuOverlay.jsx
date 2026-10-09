@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMenuOpen } from '../../store/uiSlice';
-import { siteConfig } from '../../data/site';
-import { profile } from '../../data/profile';
-import { GlowKey } from '../ui/GlowKey';
-import { gsap } from '../../lib/gsap';
-import { stopLenis, startLenis } from '../../lib/lenis';
+import React, { useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setMenuOpen } from "../../store/uiSlice";
+import { siteConfig } from "../../data/site";
+import { profile } from "../../data/profile";
+import { GlowKey } from "../ui/GlowKey";
+import { gsap } from "../../lib/gsap";
+import { stopLenis, startLenis } from "../../lib/lenis";
 
 export function MenuOverlay() {
   const dispatch = useDispatch();
@@ -19,22 +19,22 @@ export function MenuOverlay() {
   useEffect(() => {
     if (menuOpen) {
       stopLenis();
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       startLenis();
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
   }, [menuOpen]);
 
   // Handle ESC key to close
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && menuOpen) {
+      if (e.key === "Escape" && menuOpen) {
         dispatch(setMenuOpen(false));
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [menuOpen, dispatch]);
 
   // Animate menu open and close
@@ -43,9 +43,9 @@ export function MenuOverlay() {
 
     if (menuOpen) {
       gsap.to(overlayRef.current, {
-        clipPath: 'circle(150% at calc(100% - 50px) 45px)',
+        clipPath: "circle(150% at calc(100% - 50px) 45px)",
         duration: 0.75,
-        ease: 'power4.inOut',
+        ease: "power4.inOut",
       });
 
       if (linksContainerRef.current) {
@@ -58,15 +58,15 @@ export function MenuOverlay() {
             stagger: 0.08,
             duration: 0.6,
             delay: 0.25,
-            ease: 'power3.out',
-          }
+            ease: "power3.out",
+          },
         );
       }
     } else {
       gsap.to(overlayRef.current, {
-        clipPath: 'circle(0% at calc(100% - 50px) 45px)',
+        clipPath: "circle(0% at calc(100% - 50px) 45px)",
         duration: 0.6,
-        ease: 'power4.inOut',
+        ease: "power4.inOut",
       });
     }
   }, [menuOpen]);
@@ -75,9 +75,11 @@ export function MenuOverlay() {
     <div
       ref={overlayRef}
       className={`fixed inset-0 z-45 bg-bg/95 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-16 md:p-24 transition-opacity ${
-        menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        menuOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
       }`}
-      style={{ clipPath: 'circle(0% at calc(100% - 50px) 45px)' }}
+      style={{ clipPath: "circle(0% at calc(100% - 50px) 45px)" }}
     >
       {/* Top Header Information */}
       <div className="flex items-center justify-between border-b border-line pb-6">
@@ -108,7 +110,11 @@ export function MenuOverlay() {
               <span className="font-mono text-xs sm:text-sm font-normal text-fg-dim tracking-widest group-hover:text-accent">
                 {item.index}
               </span>
-              <span className={isActive ? "text-accent underline underline-offset-8" : ""}>
+              <span
+                className={
+                  isActive ? "text-accent underline underline-offset-8" : ""
+                }
+              >
                 {item.label}
               </span>
             </Link>
@@ -128,7 +134,9 @@ export function MenuOverlay() {
           </a>
         </div>
         <div>
-          <span className="text-fg-dim block mb-1">SOURCE CODE & REPOSITORIES</span>
+          <span className="text-fg-dim block mb-1">
+            SOURCE CODE & REPOSITORIES
+          </span>
           <a
             href={profile.contact.github}
             target="_blank"

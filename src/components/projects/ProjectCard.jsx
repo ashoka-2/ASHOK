@@ -103,3 +103,6 @@ export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
     </Link>
   );
 }
+
+export default ProjectCard;
+

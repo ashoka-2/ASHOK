@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { profile } from '../../data/profile';
-import { siteConfig } from '../../data/site';
-import { scrollTo } from '../../lib/lenis';
-import { ArrowUp, Mail } from 'lucide-react';
-import { GithubIcon } from '../ui/GithubIcon';
-import { GlowKey } from '../ui/GlowKey';
+import React from "react";
+import { Link } from "react-router-dom";
+import { profile } from "../../data/profile";
+import { siteConfig } from "../../data/site";
+import { scrollTo } from "../../lib/lenis";
+import { ArrowUp, Mail } from "lucide-react";
+import { GithubIcon } from "../ui/GithubIcon";
+import { GlowKey } from "../ui/GlowKey";
 
 export function Footer() {
   const handleScrollTop = () => {
@@ -39,7 +39,9 @@ export function Footer() {
         {/* Middle Navigation & Info Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono text-xs">
           <div>
-            <span className="text-fg-dim block mb-3 uppercase tracking-wider">PAGES</span>
+            <span className="text-fg-dim block mb-3 uppercase tracking-wider">
+              PAGES
+            </span>
             <ul className="flex flex-col gap-2">
               {siteConfig.navLinks.map((link) => (
                 <li key={link.href}>
@@ -55,25 +57,39 @@ export function Footer() {
           </div>
 
           <div>
-            <span className="text-fg-dim block mb-3 uppercase tracking-wider">PROJECTS</span>
+            <span className="text-fg-dim block mb-3 uppercase tracking-wider">
+              PROJECTS
+            </span>
             <ul className="flex flex-col gap-2">
               <li>
-                <Link to="/projects/snap2bill" className="text-fg-muted hover:text-accent transition-colors">
+                <Link
+                  to="/projects/snap2bill"
+                  className="text-fg-muted hover:text-accent transition-colors"
+                >
                   Snap2Bill
                 </Link>
               </li>
               <li>
-                <Link to="/projects/parsu" className="text-fg-muted hover:text-accent transition-colors">
+                <Link
+                  to="/projects/parsu"
+                  className="text-fg-muted hover:text-accent transition-colors"
+                >
                   Parsu AI
                 </Link>
               </li>
               <li>
-                <Link to="/projects/codespace" className="text-fg-muted hover:text-accent transition-colors">
+                <Link
+                  to="/projects/codespace"
+                  className="text-fg-muted hover:text-accent transition-colors"
+                >
                   codeSpace
                 </Link>
               </li>
               <li>
-                <Link to="/projects/scapegoat" className="text-fg-muted hover:text-accent transition-colors">
+                <Link
+                  to="/projects/scapegoat"
+                  className="text-fg-muted hover:text-accent transition-colors"
+                >
                   ScapeGoat
                 </Link>
               </li>
@@ -81,7 +97,9 @@ export function Footer() {
           </div>
 
           <div>
-            <span className="text-fg-dim block mb-3 uppercase tracking-wider">CONNECT</span>
+            <span className="text-fg-dim block mb-3 uppercase tracking-wider">
+              CONNECT
+            </span>
             <ul className="flex flex-col gap-2">
               <li>
                 <a
@@ -107,7 +125,9 @@ export function Footer() {
 
           <div className="flex flex-col justify-between items-start md:items-end">
             <div>
-              <span className="text-fg-dim block mb-1 uppercase tracking-wider">BASE</span>
+              <span className="text-fg-dim block mb-1 uppercase tracking-wider">
+                BASE
+              </span>
               <span className="text-fg font-medium">{profile.location}</span>
             </div>
             <button
@@ -131,9 +151,7 @@ export function Footer() {
             <GlowKey>ESC</GlowKey>
             <span>FOR FULLSCREEN MENU</span>
           </div>
-          <div>
-            BUILT WITH REACT 19 & GSAP
-          </div>
+          <div>BUILT WITH REACT 19 & GSAP</div>
         </div>
       </div>
     </footer>

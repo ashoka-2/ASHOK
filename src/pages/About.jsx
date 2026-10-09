@@ -1,9 +1,9 @@
-import React from 'react';
-import { PageShell } from '../components/layout/PageShell';
-import { profile } from '../data/profile';
-import { SectionLabel } from '../components/ui/SectionLabel';
-import { Button } from '../components/ui/Button';
-import { ArrowUpRight, GraduationCap, MapPin, Sparkles } from 'lucide-react';
+import React from "react";
+import { PageShell } from "../components/layout/PageShell";
+import { profile } from "../data/profile";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { Button } from "../components/ui/Button";
+import { ArrowUpRight, GraduationCap, MapPin, Sparkles } from "lucide-react";
 
 export function About() {
   return (
@@ -61,17 +61,27 @@ export function About() {
               <div className="p-5 rounded-[20px] bg-bg-surface border border-line flex items-start gap-3">
                 <GraduationCap className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-fg font-semibold block">{profile.education.degree}</span>
-                  <span className="text-fg-muted block mt-1">{profile.education.institution}</span>
-                  <span className="text-fg-dim block mt-0.5">{profile.education.campus}</span>
+                  <span className="text-fg font-semibold block">
+                    {profile.education.degree}
+                  </span>
+                  <span className="text-fg-muted block mt-1">
+                    {profile.education.institution}
+                  </span>
+                  <span className="text-fg-dim block mt-0.5">
+                    {profile.education.campus}
+                  </span>
                 </div>
               </div>
 
               <div className="p-5 rounded-[20px] bg-bg-surface border border-line flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-fg font-semibold block">Based in {profile.location}</span>
-                  <span className="text-fg-muted block mt-1">Available for global remote engagements</span>
+                  <span className="text-fg font-semibold block">
+                    Based in {profile.location}
+                  </span>
+                  <span className="text-fg-muted block mt-1">
+                    Available for global remote engagements
+                  </span>
                 </div>
               </div>
             </div>
@@ -93,7 +103,9 @@ export function About() {
                   <span>{step}</span>
                 </div>
                 {idx < profile.workflow.length - 1 && (
-                  <span className="text-accent font-bold text-lg select-none">→</span>
+                  <span className="text-accent font-bold text-lg select-none">
+                    →
+                  </span>
                 )}
               </React.Fragment>
             ))}
@@ -118,7 +130,10 @@ export function About() {
                 </span>
                 <ul className="flex flex-col gap-2 font-mono text-xs text-fg-muted">
                   {list.map((item) => (
-                    <li key={item} className="flex items-center gap-2 hover:text-fg transition-colors">
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 hover:text-fg transition-colors"
+                    >
                       <span className="w-1 h-1 rounded-full bg-accent" />
                       <span>{item}</span>
                     </li>

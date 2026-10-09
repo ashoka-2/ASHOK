@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { PageShell } from '../components/layout/PageShell';
-import { labExperiments } from '../data/lab';
-import { SectionLabel } from '../components/ui/SectionLabel';
-import { Button } from '../components/ui/Button';
-import { InteractiveTile } from '../components/lab/InteractiveTile';
-import { Play, Sparkles, X, Terminal } from 'lucide-react';
+import React, { useState } from "react";
+import { PageShell } from "../components/layout/PageShell";
+import { labExperiments } from "../data/lab";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { Button } from "../components/ui/Button";
+import { InteractiveTile } from "../components/lab/InteractiveTile";
+import { Play, Sparkles, X, Terminal } from "lucide-react";
 
 export function Lab() {
   const [activeExperiment, setActiveExperiment] = useState(null);
@@ -19,7 +19,9 @@ export function Lab() {
             Creative code, shaders & mechanics.
           </h1>
           <p className="font-mono text-xs sm:text-sm text-fg-muted mt-4 max-w-[650px] leading-relaxed">
-            A sandbox of interactive prototypes exploring computational design, WebGL point clouds, physics engines, and generative vector mathematics.
+            A sandbox of interactive prototypes exploring computational design,
+            WebGL point clouds, physics engines, and generative vector
+            mathematics.
           </p>
         </div>
 
@@ -113,7 +115,10 @@ export function Lab() {
                   className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center animate-pulse"
                   style={{ backgroundColor: `${activeExperiment.accent}20` }}
                 >
-                  <Sparkles className="w-10 h-10" style={{ color: activeExperiment.accent }} />
+                  <Sparkles
+                    className="w-10 h-10"
+                    style={{ color: activeExperiment.accent }}
+                  />
                 </div>
                 <h4 className="font-display text-2xl font-bold text-fg mb-3">
                   {activeExperiment.title} Active

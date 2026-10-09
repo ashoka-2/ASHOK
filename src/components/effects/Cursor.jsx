@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { gsap } from '../../lib/gsap';
-import { useIsTouch } from '../../hooks/useMediaQuery';
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { gsap } from "../../lib/gsap";
+import { useIsTouch } from "../../hooks/useMediaQuery";
 
 export function Cursor() {
   const isTouch = useIsTouch();
@@ -12,17 +12,29 @@ export function Cursor() {
   const { cursorMode, cursorText } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    if (isTouch || typeof window === 'undefined') return;
+    if (isTouch || typeof window === "undefined") return;
 
     const dot = cursorDotRef.current;
     const ring = cursorRingRef.current;
     if (!dot || !ring) return;
 
     // Fast quickTo position setters
-    const setDotX = gsap.quickTo(dot, 'x', { duration: 0.1, ease: 'power2.out' });
-    const setDotY = gsap.quickTo(dot, 'y', { duration: 0.1, ease: 'power2.out' });
-    const setRingX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
-    const setRingY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+    const setDotX = gsap.quickTo(dot, "x", {
+      duration: 0.1,
+      ease: "power2.out",
+    });
+    const setDotY = gsap.quickTo(dot, "y", {
+      duration: 0.1,
+      ease: "power2.out",
+    });
+    const setRingX = gsap.quickTo(ring, "x", {
+      duration: 0.35,
+      ease: "power3.out",
+    });
+    const setRingY = gsap.quickTo(ring, "y", {
+      duration: 0.35,
+      ease: "power3.out",
+    });
 
     const handleMouseMove = (e) => {
       setDotX(e.clientX);
@@ -31,8 +43,8 @@ export function Cursor() {
       setRingY(e.clientY);
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isTouch]);
 
   // Handle cursor mode animations
@@ -41,34 +53,34 @@ export function Cursor() {
     const ring = cursorRingRef.current;
 
     switch (cursorMode) {
-      case 'view':
+      case "view":
         gsap.to(ring, {
           scale: 3.2,
-          backgroundColor: 'rgba(57, 230, 0, 0.95)',
-          borderColor: 'transparent',
+          backgroundColor: "rgba(57, 230, 0, 0.95)",
+          borderColor: "transparent",
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
         break;
-      case 'drag':
+      case "drag":
         gsap.to(ring, {
           scale: 2.8,
-          backgroundColor: 'rgba(45, 107, 255, 0.9)',
-          borderColor: 'transparent',
+          backgroundColor: "rgba(45, 107, 255, 0.9)",
+          borderColor: "transparent",
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
         break;
-      case 'pointer':
+      case "pointer":
         gsap.to(ring, {
           scale: 1.6,
-          backgroundColor: 'transparent',
-          borderColor: 'var(--accent)',
+          backgroundColor: "transparent",
+          borderColor: "var(--accent)",
           duration: 0.25,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
         break;
-      case 'text':
+      case "text":
         gsap.to(ring, {
           scale: 0.5,
           opacity: 0.4,
@@ -79,10 +91,10 @@ export function Cursor() {
         gsap.to(ring, {
           scale: 1,
           opacity: 1,
-          backgroundColor: 'transparent',
-          borderColor: 'var(--line-strong)',
+          backgroundColor: "transparent",
+          borderColor: "var(--line-strong)",
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
     }
   }, [cursorMode, isTouch]);

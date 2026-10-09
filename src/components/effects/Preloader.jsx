@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPreloaderDone } from '../../store/uiSlice';
-import { gsap } from '../../lib/gsap';
-import { stopLenis, startLenis } from '../../lib/lenis';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPreloaderDone } from "../../store/uiSlice";
+import { gsap } from "../../lib/gsap";
+import { stopLenis, startLenis } from "../../lib/lenis";
 
 export function Preloader() {
   const dispatch = useDispatch();
@@ -19,7 +19,9 @@ export function Preloader() {
     // Pause smooth scrolling during intro
     stopLenis();
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReducedMotion) {
       dispatch(setPreloaderDone(true));
       startLenis();
@@ -37,8 +39,8 @@ export function Preloader() {
         onComplete: () => {
           dispatch(setPreloaderDone(true));
           startLenis();
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(new CustomEvent('preloader:complete'));
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("preloader:complete"));
           }
         },
       });
@@ -47,36 +49,36 @@ export function Preloader() {
         .to(progressObj, {
           value: 100,
           duration: 0.35,
-          ease: 'power2.out',
+          ease: "power2.out",
           onUpdate: () => setProgress(Math.floor(progressObj.value)),
         })
         .to(textRef.current, {
           scale: 1.08,
-          letterSpacing: '0.12em',
+          letterSpacing: "0.12em",
           duration: 0.35,
-          ease: 'power3.out',
+          ease: "power3.out",
         })
         .to(containerRef.current, {
           opacity: 0,
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
           duration: 0.7,
-          ease: 'power3.inOut',
+          ease: "power3.inOut",
           onComplete: () => {
             if (containerRef.current) {
-              containerRef.current.style.display = 'none';
-              containerRef.current.style.pointerEvents = 'none';
+              containerRef.current.style.display = "none";
+              containerRef.current.style.pointerEvents = "none";
             }
           },
         });
     };
 
     const handleAvatarProgress = (e) => {
-      const ratio = typeof e.detail === 'number' ? e.detail : 1;
+      const ratio = typeof e.detail === "number" ? e.detail : 1;
       const target = Math.min(100, Math.floor(ratio * 100));
       gsap.to(progressObj, {
         value: target,
         duration: 0.4,
-        ease: 'power1.out',
+        ease: "power1.out",
         onUpdate: () => setProgress(Math.floor(progressObj.value)),
         onComplete: () => {
           if (target >= 100) {
@@ -86,7 +88,7 @@ export function Preloader() {
       });
     };
 
-    window.addEventListener('avatar:progress', handleAvatarProgress);
+    window.addEventListener("avatar:progress", handleAvatarProgress);
 
     // Fallback timer: ensure preloader finishes after at most 2.4s even if assets load instantly or offline
     const fallbackTimer = setTimeout(() => {
@@ -94,7 +96,7 @@ export function Preloader() {
     }, 2400);
 
     return () => {
-      window.removeEventListener('avatar:progress', handleAvatarProgress);
+      window.removeEventListener("avatar:progress", handleAvatarProgress);
       clearTimeout(fallbackTimer);
     };
   }, [dispatch, preloaderDone]);
@@ -106,7 +108,7 @@ export function Preloader() {
       id="preloader"
       ref={containerRef}
       className="fixed inset-0 z-[99998] bg-bg flex flex-col items-center justify-center select-none"
-      style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+      style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
     >
       <div className="flex flex-col items-center gap-6">
         {/* Draw outline / glow name */}
@@ -125,7 +127,7 @@ export function Preloader() {
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
           <span>INITIALIZING</span>
           <span className="text-fg font-semibold">
-            {progress.toString().padStart(3, '0')}%
+            {progress.toString().padStart(3, "0")}%
           </span>
         </div>
 

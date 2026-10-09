@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { PageShell } from '../components/layout/PageShell';
-import { profile } from '../data/profile';
-import { SectionLabel } from '../components/ui/SectionLabel';
-import { Button } from '../components/ui/Button';
-import { Copy, Check, Mail, Send } from 'lucide-react';
-import { GithubIcon } from '../components/ui/GithubIcon';
+import React, { useState } from "react";
+import { PageShell } from "../components/layout/PageShell";
+import { profile } from "../data/profile";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { Button } from "../components/ui/Button";
+import { Copy, Check, Mail, Send } from "lucide-react";
+import { GithubIcon } from "../components/ui/GithubIcon";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profile.contact.email);
@@ -32,7 +36,9 @@ export function Contact() {
             Let's build something truly exceptional together.
           </h1>
           <p className="font-mono text-xs sm:text-sm text-fg-muted mt-4 max-w-[600px] leading-relaxed">
-            Whether you are looking to build autonomous AI systems, award-winning interactive web applications, or scalable backend APIs.
+            Whether you are looking to build autonomous AI systems,
+            award-winning interactive web applications, or scalable backend
+            APIs.
           </p>
         </div>
 
@@ -56,7 +62,13 @@ export function Contact() {
                   onClick={handleCopyEmail}
                   variant="primary"
                   size="sm"
-                  icon={copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  icon={
+                    copied ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )
+                  }
                 >
                   {copied ? "Copied to Clipboard" : "Copy Address"}
                 </Button>
@@ -115,10 +127,14 @@ export function Contact() {
               Send a direct message
             </h3>
             <p className="font-mono text-xs text-fg-muted mb-8">
-              Fill in your thoughts and it will open directly in your mail client.
+              Fill in your thoughts and it will open directly in your mail
+              client.
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-mono text-xs">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-6 font-mono text-xs"
+            >
               <div>
                 <label className="block text-fg-dim mb-2 uppercase tracking-wider">
                   YOUR NAME
@@ -127,7 +143,9 @@ export function Contact() {
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="e.g. Satoshi Nakamoto"
                   className="w-full px-5 py-3.5 rounded-[14px] bg-bg-surface border border-line text-fg placeholder:text-fg-dim focus:outline-none focus:border-accent text-sm"
                 />
@@ -141,7 +159,9 @@ export function Contact() {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="satoshi@domain.com"
                   className="w-full px-5 py-3.5 rounded-[14px] bg-bg-surface border border-line text-fg placeholder:text-fg-dim focus:outline-none focus:border-accent text-sm"
                 />
@@ -155,7 +175,9 @@ export function Contact() {
                   rows={5}
                   required
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   placeholder="Tell me about what you are building..."
                   className="w-full px-5 py-3.5 rounded-[14px] bg-bg-surface border border-line text-fg placeholder:text-fg-dim focus:outline-none focus:border-accent text-sm resize-none"
                 />

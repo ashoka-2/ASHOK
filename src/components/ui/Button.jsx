@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { cn } from '../../lib/utils';
-import { gsap } from '../../lib/gsap';
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import { cn } from "../../lib/utils";
+import { gsap } from "../../lib/gsap";
 
 export function Button({
   children,
-  variant = 'primary',
-  size = 'md',
-  as = 'button',
+  variant = "primary",
+  size = "md",
+  as = "button",
   href,
   to,
   className,
@@ -29,7 +29,7 @@ export function Button({
       x: x * 0.2,
       y: y * 0.2,
       duration: 0.3,
-      ease: 'power2.out',
+      ease: "power2.out",
     });
   };
 
@@ -39,11 +39,12 @@ export function Button({
       x: 0,
       y: 0,
       duration: 0.5,
-      ease: 'elastic.out(1, 0.4)',
+      ease: "elastic.out(1, 0.4)",
     });
   };
 
-  const baseStyles = "relative inline-flex items-center justify-center font-medium font-display tracking-tight transition-all duration-300 select-none overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  const baseStyles =
+    "relative inline-flex items-center justify-center font-medium font-display tracking-tight transition-all duration-300 select-none overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
   const sizeStyles = {
     sm: "text-xs px-4 py-1.5 rounded-full gap-2",
@@ -53,8 +54,10 @@ export function Button({
   };
 
   const variantStyles = {
-    primary: "bg-accent text-accent-on font-semibold hover:shadow-[0_0_24px_rgba(57,230,0,0.4)] active:scale-95",
-    secondary: "bg-bg-elev/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-95",
+    primary:
+      "bg-accent text-accent-on font-semibold hover:shadow-[0_0_24px_rgba(57,230,0,0.4)] active:scale-95",
+    secondary:
+      "bg-bg-elev/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-95",
     ghost: "text-fg-muted hover:text-accent bg-transparent active:scale-95",
     icon: "bg-bg-elev/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-90",
   };
@@ -63,14 +66,22 @@ export function Button({
     baseStyles,
     sizeStyles[size] || sizeStyles.md,
     variantStyles[variant] || variantStyles.primary,
-    className
+    className,
   );
 
   const content = (
     <>
-      {icon && <span className="transition-transform duration-300 group-hover:-translate-x-0.5">{icon}</span>}
+      {icon && (
+        <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
+          {icon}
+        </span>
+      )}
       <span className="relative z-10 flex items-center gap-2">{children}</span>
-      {iconRight && <span className="transition-transform duration-300 group-hover:translate-x-1">{iconRight}</span>}
+      {iconRight && (
+        <span className="transition-transform duration-300 group-hover:translate-x-1">
+          {iconRight}
+        </span>
+      )}
     </>
   );
 

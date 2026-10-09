@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import { gsap } from '../../lib/gsap';
-import { scrollTo } from '../../lib/lenis';
+import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { gsap } from "../../lib/gsap";
+import { scrollTo } from "../../lib/lenis";
 
 export function PageTransition({ children }) {
   const location = useLocation();
@@ -40,47 +40,56 @@ export function PageTransition({ children }) {
     const tl = gsap.timeline();
 
     // Reset paths & pointer events
-    path.parentElement.style.pointerEvents = 'auto';
+    path.parentElement.style.pointerEvents = "auto";
     gsap.set(bar, { scaleX: 0, opacity: 1 });
     gsap.set(badge, { opacity: 0, scale: 0.85, y: 30 });
     gsap.set(path, { attr: { d: p1 } });
 
     // Step 1: Laser progress line
-    tl.to(bar, { scaleX: 0.75, duration: 0.25, ease: 'power2.out' }, 0)
+    tl.to(bar, { scaleX: 0.75, duration: 0.25, ease: "power2.out" }, 0)
 
-    // Step 2: Liquid Wave Morph Upwards
-      .to(path, { attr: { d: p2 }, duration: 0.35, ease: 'power2.in' }, 0)
-      .to(path, { attr: { d: p3 }, duration: 0.22, ease: 'power2.out' })
-      .to(badge, { opacity: 1, scale: 1, y: 0, duration: 0.25, ease: 'back.out(1.5)' }, '-=0.15')
+      // Step 2: Liquid Wave Morph Upwards
+      .to(path, { attr: { d: p2 }, duration: 0.35, ease: "power2.in" }, 0)
+      .to(path, { attr: { d: p3 }, duration: 0.22, ease: "power2.out" })
+      .to(
+        badge,
+        { opacity: 1, scale: 1, y: 0, duration: 0.25, ease: "back.out(1.5)" },
+        "-=0.15",
+      )
 
-    // Step 3: Peak coverage -> Reset scroll position
+      // Step 3: Peak coverage -> Reset scroll position
       .call(() => {
         scrollTo(0, { immediate: true });
       })
 
-    // Step 4: Wave exit & morph out to ceiling
-      .to(bar, { scaleX: 1, duration: 0.2, ease: 'power2.in' })
+      // Step 4: Wave exit & morph out to ceiling
+      .to(bar, { scaleX: 1, duration: 0.2, ease: "power2.in" })
       .to(bar, { opacity: 0, duration: 0.15 })
-      .to(badge, { opacity: 0, scale: 1.15, y: -25, duration: 0.25, ease: 'power2.in' }, '-=0.1')
-      .to(path, { attr: { d: p4 }, duration: 0.3, ease: 'power2.in' }, '-=0.15')
-      .to(path, { attr: { d: p5 }, duration: 0.25, ease: 'power2.out' })
+      .to(
+        badge,
+        { opacity: 0, scale: 1.15, y: -25, duration: 0.25, ease: "power2.in" },
+        "-=0.1",
+      )
+      .to(path, { attr: { d: p4 }, duration: 0.3, ease: "power2.in" }, "-=0.15")
+      .to(path, { attr: { d: p5 }, duration: 0.25, ease: "power2.out" })
 
-    // Step 5: Content reveal with 3D scale and blur-to-sharp morph
+      // Step 5: Content reveal with 3D scale and blur-to-sharp morph
       .fromTo(
         content,
-        { opacity: 0, y: 28, scale: 0.98, filter: 'blur(10px)' },
+        { opacity: 0, y: 28, scale: 0.98, filter: "blur(10px)" },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          filter: 'blur(0px)',
+          filter: "blur(0px)",
           duration: 0.65,
-          ease: 'power3.out',
+          ease: "power3.out",
           onComplete: () => {
-            if (path.parentElement) path.parentElement.style.pointerEvents = 'none';
+            if (path.parentElement)
+              path.parentElement.style.pointerEvents = "none";
           },
         },
-        '-=0.35'
+        "-=0.35",
       );
 
     return () => {
@@ -95,7 +104,7 @@ export function PageTransition({ children }) {
         ref={progressBarRef}
         aria-hidden="true"
         className="fixed top-0 left-0 right-0 h-[3px] bg-accent z-[99999] pointer-events-none origin-left shadow-[0_0_12px_var(--accent)]"
-        style={{ transform: 'scaleX(0)' }}
+        style={{ transform: "scaleX(0)" }}
       />
 
       {/* Cool Liquid Morph Wave SVG Curtain */}

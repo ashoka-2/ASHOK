@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { PageShell } from '../components/layout/PageShell';
-import { projects } from '../data/projects';
-import { ProjectCard } from '../components/projects/ProjectCard';
-import { SectionLabel } from '../components/ui/SectionLabel';
+import React, { useState } from "react";
+import { PageShell } from "../components/layout/PageShell";
+import { projects } from "../data/projects";
+import { ProjectCard } from "../components/projects/ProjectCard";
+import { SectionLabel } from "../components/ui/SectionLabel";
 
 export function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
 
-  const categories = ['ALL', 'AI', 'FULL STACK', 'CLOUD', 'CREATIVE'];
+  const categories = ["ALL", "AI", "FULL STACK", "CLOUD", "CREATIVE"];
 
-  const filteredProjects = selectedCategory === 'ALL'
-    ? projects
-    : projects.filter((p) =>
-        p.category.some((c) => c.toUpperCase().includes(selectedCategory))
-      );
+  const filteredProjects =
+    selectedCategory === "ALL"
+      ? projects
+      : projects.filter((p) =>
+          p.category.some((c) => c.toUpperCase().includes(selectedCategory)),
+        );
 
   return (
     <PageShell>
@@ -25,7 +26,9 @@ export function Projects() {
             Selected works & engineering projects.
           </h1>
           <p className="font-mono text-xs sm:text-sm text-fg-muted mt-4 max-w-[600px] leading-relaxed">
-            A comprehensive catalog of autonomous AI agent workflows, distributed cloud architectures, and interactive digital experiences.
+            A comprehensive catalog of autonomous AI agent workflows,
+            distributed cloud architectures, and interactive digital
+            experiences.
           </p>
         </div>
 
@@ -37,8 +40,8 @@ export function Projects() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-1.5 rounded-full font-mono text-xs tracking-wider transition-all duration-300 ${
                 selectedCategory === cat
-                  ? 'bg-accent text-accent-on font-semibold shadow-sm'
-                  : 'bg-bg-surface/60 border border-line text-fg-muted hover:text-fg'
+                  ? "bg-accent text-accent-on font-semibold shadow-sm"
+                  : "bg-bg-surface/60 border border-line text-fg-muted hover:text-fg"
               }`}
             >
               {cat}

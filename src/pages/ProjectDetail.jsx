@@ -1,13 +1,13 @@
-import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { PageShell } from '../components/layout/PageShell';
-import { projects } from '../data/projects';
-import { useTheme } from '../hooks/useTheme';
-import { Button } from '../components/ui/Button';
-import { Tag } from '../components/ui/Tag';
-import { SectionLabel } from '../components/ui/SectionLabel';
-import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
-import { GithubIcon } from '../components/ui/GithubIcon';
+import React from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import { PageShell } from "../components/layout/PageShell";
+import { projects } from "../data/projects";
+import { useTheme } from "../hooks/useTheme";
+import { Button } from "../components/ui/Button";
+import { Tag } from "../components/ui/Tag";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
+import { GithubIcon } from "../components/ui/GithubIcon";
 
 export function ProjectDetail() {
   const { slug } = useParams();
@@ -21,7 +21,7 @@ export function ProjectDetail() {
   const project = projects[currentIndex];
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
-  const isDark = theme === 'dark';
+  const isDark = theme === "dark";
   const coverSrc = isDark ? project.cover.dark : project.cover.light;
 
   return (
@@ -44,7 +44,9 @@ export function ProjectDetail() {
             </span>
             <span className="text-fg-dim font-mono text-xs">•</span>
             {project.category.map((c) => (
-              <Tag key={c} variant="accent">{c}</Tag>
+              <Tag key={c} variant="accent">
+                {c}
+              </Tag>
             ))}
           </div>
 
