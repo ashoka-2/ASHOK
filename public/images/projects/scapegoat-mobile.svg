@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1100" width="100%" height="100%">
+  <rect width="600" height="1100" rx="44" fill="#110A06" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <rect x="220" y="24" width="160" height="30" rx="15" fill="#000000"/>
+  <text x="50" y="105" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="700">ScapeGoat Store</text>
+  <rect x="40" y="140" width="520" height="340" rx="20" fill="#20140D" stroke="#F97316" stroke-width="1.5"/>
+  <text x="70" y="185" fill="#F97316" font-family="system-ui, sans-serif" font-size="14" font-weight="700">AI SHOPPING ASSISTANT</text>
+  <text x="70" y="225" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="20" font-weight="600">Curated recommendations for you</text>
+</svg>

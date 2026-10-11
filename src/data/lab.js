@@ -4,7 +4,7 @@ export const labExperiments = [
     title: "Particle Portrait",
     category: "Three.js & Point Cloud",
     description: "Real-time luminance-sampled particle grid of Ashok Kumar's portrait reacting to cursor velocity and mouse repulsion forces.",
-    accent: "#39E600",
+    accent: "#ed2493",
     cover: "/images/lab/particle-portrait.webp",
     tech: ["Three.js", "GLSL Shaders", "Point Cloud Math"]
   },

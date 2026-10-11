@@ -24,13 +24,7 @@ export function PageTransition({ children }) {
     const content = contentRef.current;
     if (!path || !content) return;
 
-    // Define fluid morph stages
-    // 1. Flat at bottom: M 0 100 V 100 Q 50 100 100 100 V 100 z
-    // 2. Rising fluid arch: M 0 0 V 100 Q 50 -30 100 100 V 0 z
-    // 3. Fully covered: M 0 0 V 100 Q 50 100 100 100 V 0 z
-    // 4. Exiting fluid arch: M 0 0 V 0 Q 50 -30 100 0 V 0 z
-    // 5. Flat at top: M 0 0 V 0 Q 50 0 100 0 V 0 z
-
+    // Fluid morph coordinates
     const p1 = "M 0 100 V 100 Q 50 100 100 100 V 100 z";
     const p2 = "M 0 0 V 100 Q 50 -35 100 100 V 0 z";
     const p3 = "M 0 0 V 100 Q 50 100 100 100 V 0 z";
@@ -42,7 +36,7 @@ export function PageTransition({ children }) {
     // Reset paths & pointer events
     path.parentElement.style.pointerEvents = "auto";
     gsap.set(bar, { scaleX: 0, opacity: 1 });
-    gsap.set(badge, { opacity: 0, scale: 0.85, y: 30 });
+    gsap.set(badge, { opacity: 0, scale: 0.9, y: 24 });
     gsap.set(path, { attr: { d: p1 } });
 
     // Step 1: Laser progress line
@@ -67,7 +61,7 @@ export function PageTransition({ children }) {
       .to(bar, { opacity: 0, duration: 0.15 })
       .to(
         badge,
-        { opacity: 0, scale: 1.15, y: -25, duration: 0.25, ease: "power2.in" },
+        { opacity: 0, scale: 1.1, y: -20, duration: 0.25, ease: "power2.in" },
         "-=0.1",
       )
       .to(path, { attr: { d: p4 }, duration: 0.3, ease: "power2.in" }, "-=0.15")
@@ -76,13 +70,13 @@ export function PageTransition({ children }) {
       // Step 5: Content reveal with 3D scale and blur-to-sharp morph
       .fromTo(
         content,
-        { opacity: 0, y: 28, scale: 0.98, filter: "blur(10px)" },
+        { opacity: 0, y: 24, scale: 0.985, filter: "blur(8px)" },
         {
           opacity: 1,
           y: 0,
           scale: 1,
           filter: "blur(0px)",
-          duration: 0.65,
+          duration: 0.6,
           ease: "power3.out",
           onComplete: () => {
             if (path.parentElement)
@@ -99,7 +93,7 @@ export function PageTransition({ children }) {
 
   return (
     <>
-      {/* Top Laser Progress Line (#sp) */}
+      {/* Top Laser Progress Line */}
       <div
         ref={progressBarRef}
         aria-hidden="true"
@@ -107,7 +101,7 @@ export function PageTransition({ children }) {
         style={{ transform: "scaleX(0)" }}
       />
 
-      {/* Cool Liquid Morph Wave SVG Curtain */}
+      {/* Liquid Morph Wave SVG Curtain */}
       <svg
         className="fixed inset-0 w-full h-full pointer-events-none z-[99990]"
         viewBox="0 0 100 100"
@@ -127,14 +121,14 @@ export function PageTransition({ children }) {
         aria-hidden="true"
         className="fixed inset-0 z-[99995] pointer-events-none flex flex-col items-center justify-center gap-3 opacity-0"
       >
-        <div className="w-12 h-12 rounded-full border border-accent/60 bg-bg/80 backdrop-blur-md flex items-center justify-center shadow-[0_0_24px_rgba(57,230,0,0.35)]">
-          <span className="w-3 h-3 rounded-full bg-accent animate-ping" />
+        <div className="w-12 h-12 rounded-full border border-accent/60 bg-bg/85 backdrop-blur-md flex items-center justify-center shadow-[0_0_24px_var(--accent-soft)]">
+          <span className="w-2.5 h-2.5 rounded-full bg-accent animate-ping" />
         </div>
         <span className="font-display font-black text-xl tracking-tight text-fg uppercase">
           ASHOK KUMAR
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-accent uppercase">
-          // CREATIVE DEVELOPER
+        <span className="font-mono text-[10px] tracking-widest text-accent uppercase font-medium">
+          // CREATIVE TECHNOLOGIST
         </span>
       </div>
 

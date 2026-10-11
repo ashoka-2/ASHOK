@@ -14,6 +14,7 @@ export function Button({
   onClick,
   icon,
   iconRight,
+  fullWidth = false,
   ...props
 }) {
   const btnRef = useRef(null);
@@ -26,8 +27,8 @@ export function Button({
     const y = e.clientY - rect.top - rect.height / 2;
 
     gsap.to(btnRef.current, {
-      x: x * 0.2,
-      y: y * 0.2,
+      x: x * 0.18,
+      y: y * 0.18,
       duration: 0.3,
       ease: "power2.out",
     });
@@ -44,41 +45,48 @@ export function Button({
   };
 
   const baseStyles =
-    "relative inline-flex items-center justify-center font-medium font-display tracking-tight transition-all duration-300 select-none overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+    "relative inline-flex items-center justify-center font-medium font-display tracking-tight transition-all duration-300 select-none overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent max-w-full";
 
   const sizeStyles = {
-    sm: "text-xs px-4 py-1.5 rounded-full gap-2",
-    md: "text-sm px-6 py-2.5 rounded-full gap-2.5",
-    lg: "text-base px-8 py-3.5 rounded-full gap-3",
-    icon: "p-3 rounded-full",
+    sm: "text-xs px-3.5 sm:px-4 py-2 sm:py-1.5 rounded-full min-h-[38px] sm:min-h-[36px] gap-1.5",
+    md: "text-xs sm:text-sm px-5 sm:px-6 py-2.5 rounded-full min-h-[44px] gap-2",
+    lg: "text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-full min-h-[48px] gap-2.5",
+    icon: "p-2.5 sm:p-3 rounded-full min-w-[44px] min-h-[44px]",
   };
 
   const variantStyles = {
     primary:
-      "bg-accent text-accent-on font-semibold hover:shadow-[0_0_24px_rgba(57,230,0,0.4)] active:scale-95",
+      "bg-accent text-accent-on font-semibold hover:bg-accent-hover hover:shadow-[0_0_24px_var(--accent-soft)] active:scale-95",
     secondary:
-      "bg-bg-elev/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-95",
-    ghost: "text-fg-muted hover:text-accent bg-transparent active:scale-95",
-    icon: "bg-bg-elev/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-90",
+      "bg-bg-surface/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent hover:bg-bg-surface-raised active:scale-95",
+    tertiary:
+      "bg-transparent text-fg border border-line hover:border-accent hover:text-accent active:scale-95",
+    text:
+      "bg-transparent text-fg-muted hover:text-accent active:scale-95 px-2 py-1.5",
+    ghost:
+      "text-fg-muted hover:text-accent bg-transparent active:scale-95",
+    icon:
+      "bg-bg-surface/80 backdrop-blur-md text-fg border border-line hover:border-accent hover:text-accent active:scale-90",
   };
 
   const combinedClasses = cn(
     baseStyles,
     sizeStyles[size] || sizeStyles.md,
     variantStyles[variant] || variantStyles.primary,
+    fullWidth ? "w-full" : "",
     className,
   );
 
   const content = (
     <>
       {icon && (
-        <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
+        <span className="transition-transform duration-300 group-hover:-translate-x-0.5 flex-shrink-0">
           {icon}
         </span>
       )}
-      <span className="relative z-10 flex items-center gap-2">{children}</span>
+      <span className="relative z-10 flex items-center gap-2 truncate">{children}</span>
       {iconRight && (
-        <span className="transition-transform duration-300 group-hover:translate-x-1">
+        <span className="transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0">
           {iconRight}
         </span>
       )}
@@ -132,3 +140,26 @@ export function Button({
     </button>
   );
 }
+
+// Dedicated Responsive Button Variants
+export function PrimaryButton(props) {
+  return <Button variant="primary" {...props} />;
+}
+
+export function SecondaryButton(props) {
+  return <Button variant="secondary" {...props} />;
+}
+
+export function TertiaryButton(props) {
+  return <Button variant="tertiary" {...props} />;
+}
+
+export function TextButton(props) {
+  return <Button variant="text" {...props} />;
+}
+
+export function IconButton(props) {
+  return <Button variant="icon" size="icon" {...props} />;
+}
+
+export default Button;

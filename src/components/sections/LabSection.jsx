@@ -10,7 +10,7 @@ export function LabSection() {
       id: 'particle-portrait',
       title: 'Particle Portrait',
       subtitle: 'Hover to scatter portrait particles with spring return physics',
-      color: '#39E600',
+      color: '#ed2493',
     },
     {
       id: 'node-field',

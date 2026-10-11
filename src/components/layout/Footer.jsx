@@ -28,7 +28,7 @@ export function Footer() {
           <div>
             <a
               href={`mailto:${profile.contact.email}`}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-accent text-accent-on font-display font-semibold text-lg hover:shadow-[0_0_30px_rgba(57,230,0,0.5)] transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-accent text-accent-on font-display font-semibold text-lg hover:shadow-[0_0_30px_var(--accent-soft)] transition-all duration-300 hover:scale-105"
             >
               <Mail className="w-5 h-5" />
               <span>{profile.contact.email}</span>

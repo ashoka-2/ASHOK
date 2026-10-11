@@ -21,7 +21,7 @@ export function PullCord() {
 
     const targetTheme = theme === 'dark' ? 'light' : 'dark';
     const targetBg = targetTheme === 'light' ? '#F2F1EE' : '#0A0A0B';
-    const accentColor = targetTheme === 'light' ? 'rgba(30,158,0,0.4)' : 'rgba(57,230,0,0.6)';
+    const accentColor = targetTheme === 'light' ? 'rgba(212,20,125,0.35)' : 'rgba(237,36,147,0.5)';
 
     // Coordinate origin from the cord handle
     const rect = cordRef.current ? cordRef.current.getBoundingClientRect() : null;
@@ -163,7 +163,7 @@ export function PullCord() {
         style={{ transform: `translateY(${pullY * 0.2}px)` }}
       >
         {/* Acorn / Pill handle */}
-        <div className="w-4 h-7 rounded-full bg-bg-surface border border-line-strong shadow-md group-hover:border-accent group-hover:shadow-[0_0_12px_rgba(57,230,0,0.5)] transition-all flex items-center justify-center">
+        <div className="w-4 h-7 rounded-full bg-bg-surface border border-line-strong shadow-md group-hover:border-accent group-hover:shadow-[0_0_12px_var(--accent-soft)] transition-all flex items-center justify-center">
           <div className="w-1.5 h-3 rounded-full bg-accent/80 transition-colors group-hover:bg-accent" />
         </div>
 

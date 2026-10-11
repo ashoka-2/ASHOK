@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProjectViewMode } from '../../store/uiSlice';
 import { projects } from '../../data/projects';
 import { SectionLabel } from '../ui/SectionLabel';
 import { ProjectStack } from '../projects/ProjectStack';
 import { ProjectHorizontal } from '../projects/ProjectHorizontal';
-import { Layers, Columns } from 'lucide-react';
+import { ProjectRing } from '../projects/ProjectRing';
+import { Layers, Columns, Disc3 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function ProjectsSection() {
   const dispatch = useDispatch();
   const projectViewMode = useSelector((state) => state.ui.projectViewMode);
+
+  // Refresh ScrollTrigger whenever mode toggles to prevent blank screen / stale offsets
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [projectViewMode]);
+
   return (
     <section
       data-avatar-shot="far"
@@ -18,22 +29,22 @@ export function ProjectsSection() {
       data-avatar-pose="idle"
       className="w-full relative py-20 select-none z-20"
     >
-      {/* Top Header & View Switcher */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      {/* Top Header & 3-Mode View Switcher */}
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <SectionLabel number="01" label="SELECTED WORK" />
           <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
-            Engineered systems & products.
+            Engineered systems &amp; products.
           </h2>
         </div>
 
-        {/* Gooey Pill Mode Switcher */}
-        <div className="flex items-center gap-3">
+        {/* 3-Way Pill Mode Switcher: STACK · REEL · RING */}
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center p-1 rounded-full bg-bg-surface border border-line backdrop-blur-md">
             <button
               onClick={() => dispatch(setProjectViewMode('stack'))}
               aria-label="Stack layout view"
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
                 projectViewMode === 'stack'
                   ? 'bg-accent text-accent-on font-semibold shadow-sm'
                   : 'text-fg-muted hover:text-fg'
@@ -45,8 +56,8 @@ export function ProjectsSection() {
 
             <button
               onClick={() => dispatch(setProjectViewMode('horizontal'))}
-              aria-label="Horizontal layout view"
-              className={`hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
+              aria-label="Reel slide view"
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
                 projectViewMode === 'horizontal'
                   ? 'bg-accent text-accent-on font-semibold shadow-sm'
                   : 'text-fg-muted hover:text-fg'
@@ -54,6 +65,19 @@ export function ProjectsSection() {
             >
               <Columns className="w-3.5 h-3.5" />
               <span>REEL</span>
+            </button>
+
+            <button
+              onClick={() => dispatch(setProjectViewMode('ring'))}
+              aria-label="3D ring circular wheel view"
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
+                projectViewMode === 'ring'
+                  ? 'bg-accent text-accent-on font-semibold shadow-sm'
+                  : 'text-fg-muted hover:text-fg'
+              }`}
+            >
+              <Disc3 className="w-3.5 h-3.5" />
+              <span>RING</span>
             </button>
           </div>
 
@@ -66,6 +90,8 @@ export function ProjectsSection() {
       {/* Render Active View Mode */}
       {projectViewMode === 'horizontal' ? (
         <ProjectHorizontal projects={projects} />
+      ) : projectViewMode === 'ring' ? (
+        <ProjectRing projects={projects} />
       ) : (
         <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20">
           <ProjectStack projects={projects} />
@@ -74,3 +100,5 @@ export function ProjectsSection() {
     </section>
   );
 }
+
+export default ProjectsSection;
