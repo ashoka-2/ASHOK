@@ -3,6 +3,7 @@ import Matter from 'matter-js';
 import { techStack } from '../../data/tech';
 import { Icon } from '@iconify/react';
 import { SectionLabel } from '../ui/SectionLabel';
+import { GooeyReveal } from '../effects/ScrollTextReveal';
 
 export function TechPhysics() {
   const containerRef = useRef(null);
@@ -273,9 +274,9 @@ export function TechPhysics() {
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <SectionLabel number="03" label="TECH PHYSICS ENGINE" />
-          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
+          <GooeyReveal as="h2" className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
             Interactive rigid-body stack.
-          </h2>
+          </GooeyReveal>
         </div>
         <div className="font-mono text-xs text-fg-muted flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-accent animate-ping" />

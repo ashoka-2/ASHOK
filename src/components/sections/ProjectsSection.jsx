@@ -12,6 +12,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { playClick } from '../../lib/sfx';
 import { getLenis } from '../../lib/lenis';
 
+import { GooeyReveal } from '../effects/ScrollTextReveal';
+
 export function ProjectsSection() {
   const dispatch = useDispatch();
   const sectionRef = useRef(null);
@@ -63,9 +65,9 @@ export function ProjectsSection() {
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <SectionLabel number="01" label="SELECTED WORK" />
-          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
+          <GooeyReveal as="h2" className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
             Engineered systems &amp; products.
-          </h2>
+          </GooeyReveal>
         </div>
 
         {/* 3-Way Pill Mode Switcher: STACK · REEL · RING */}

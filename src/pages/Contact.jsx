@@ -3,6 +3,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { profile } from "../data/profile";
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { Button } from "../components/ui/Button";
+import { GooeyReveal } from "../components/effects/ScrollTextReveal";
 import { Copy, Check, Mail, Send, ChevronRight, Clock, MapPin } from "lucide-react";
 import { GithubIcon } from "../components/ui/GithubIcon";
 
@@ -32,13 +33,13 @@ export function Contact() {
         {/* Header */}
         <div className="mb-14">
           <SectionLabel number="01" label="COMMUNICATION & INQUIRIES" />
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
+          <GooeyReveal as="h1" className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
             Let's build something truly exceptional together.
-          </h1>
-          <p className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
+          </GooeyReveal>
+          <GooeyReveal as="p" className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
             Whether you are looking to build autonomous AI systems,
             award-winning interactive web applications, or high-throughput microservices.
-          </p>
+          </GooeyReveal>
         </div>
 
         {/* Contact Layout Grid */}

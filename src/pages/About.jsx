@@ -2,6 +2,7 @@ import React from "react";
 import { PageShell } from "../components/layout/PageShell";
 import { profile } from "../data/profile";
 import { SectionLabel } from "../components/ui/SectionLabel";
+import { GooeyReveal } from "../components/effects/ScrollTextReveal";
 import { GraduationCap, MapPin, Sparkles, ChevronRight, Terminal, Layers, Cpu, Globe } from "lucide-react";
 
 export function About() {
@@ -11,12 +12,12 @@ export function About() {
         {/* Page Header */}
         <div className="mb-14">
           <SectionLabel number="01" label="BIOGRAPHY & CORE PROFILE" />
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
+          <GooeyReveal as="h1" className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
             Engineering software with creative vision and rigorous logic.
-          </h1>
-          <p className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
+          </GooeyReveal>
+          <GooeyReveal as="p" className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
             Turning frontier AI models, cloud infrastructures, and high-performance frontends into calm, production-ready digital realities.
-          </p>
+          </GooeyReveal>
         </div>
 
         {/* Hero Portrait & High-Level Statement Grid */}
@@ -47,9 +48,9 @@ export function About() {
               <span className="font-mono text-xs text-accent uppercase tracking-widest block mb-3 font-semibold">
                 STATEMENT OF PURPOSE
               </span>
-              <p className="font-display text-2xl sm:text-3xl text-fg leading-relaxed">
+              <GooeyReveal as="p" className="font-display text-2xl sm:text-3xl text-fg leading-relaxed">
                 "{profile.statement}"
-              </p>
+              </GooeyReveal>
             </div>
 
             {/* Philosophy Box */}

@@ -4,6 +4,8 @@ import { Button } from '../ui/Button';
 import { InteractiveTile } from '../lab/InteractiveTile';
 import { ArrowUpRight } from 'lucide-react';
 
+import { GooeyReveal } from '../effects/ScrollTextReveal';
+
 export function LabSection() {
   const experiments = [
     {
@@ -54,9 +56,9 @@ export function LabSection() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
         <div>
           <SectionLabel number="02" label="EXPERIMENTAL LAB" />
-          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
+          <GooeyReveal as="h2" className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-fg">
             Interactive prototypes & graphics.
-          </h2>
+          </GooeyReveal>
         </div>
 
         <Button to="/lab" variant="secondary" size="md" iconRight={<ArrowUpRight className="w-4 h-4" />}>

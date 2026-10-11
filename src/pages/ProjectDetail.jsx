@@ -6,6 +6,7 @@ import { useTheme } from "../hooks/useTheme";
 import { Button } from "../components/ui/Button";
 import { Tag } from "../components/ui/Tag";
 import { SectionLabel } from "../components/ui/SectionLabel";
+import { GooeyReveal } from "../components/effects/ScrollTextReveal";
 import { ArrowLeft, ArrowUpRight, ExternalLink, Maximize2, X } from "lucide-react";
 import { GithubIcon } from "../components/ui/GithubIcon";
 
@@ -68,13 +69,13 @@ export function ProjectDetail() {
             ))}
           </div>
 
-          <h1 className="font-display text-4xl sm:text-7xl md:text-8xl font-black tracking-tight text-fg leading-[0.95] mb-8">
+          <GooeyReveal as="h1" className="font-display text-4xl sm:text-7xl md:text-8xl font-black tracking-tight text-fg leading-[0.95] mb-8">
             {project.title}
-          </h1>
+          </GooeyReveal>
 
-          <p className="font-display text-xl sm:text-2xl text-fg-muted max-w-[850px] leading-relaxed mb-10">
+          <GooeyReveal as="p" className="font-display text-xl sm:text-2xl text-fg-muted max-w-[850px] leading-relaxed mb-10">
             {project.oneLiner}
-          </p>
+          </GooeyReveal>
 
           {/* Metadata Grid & External Links (Minimal AI-App Tonal Style) */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 p-6 sm:p-8 rounded-[24px] bg-bg-surface border border-line text-xs font-mono mb-12">

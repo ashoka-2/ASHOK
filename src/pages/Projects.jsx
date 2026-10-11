@@ -3,6 +3,7 @@ import { PageShell } from "../components/layout/PageShell";
 import { projects } from "../data/projects";
 import { ProjectCard } from "../components/projects/ProjectCard";
 import { SectionLabel } from "../components/ui/SectionLabel";
+import { GooeyReveal } from "../components/effects/ScrollTextReveal";
 
 export function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
@@ -22,14 +23,14 @@ export function Projects() {
         {/* Page Header */}
         <div className="mb-12">
           <SectionLabel number="01" label="ENGINEERING & WORK ARCHIVE" />
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
+          <GooeyReveal as="h1" className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[950px] leading-[1.05]">
             Engineered systems &amp; products.
-          </h1>
-          <p className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
+          </GooeyReveal>
+          <GooeyReveal as="p" className="font-sans text-sm sm:text-base text-fg-muted mt-4 max-w-[620px] leading-relaxed">
             A comprehensive catalog of autonomous AI agent workspaces,
             distributed cloud architectures, computer vision applications, and interactive digital
             experiences.
-          </p>
+          </GooeyReveal>
         </div>
 
         {/* Filter Chips (Pill Buttons) */}
