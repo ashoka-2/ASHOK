@@ -8,9 +8,10 @@ export function Preloader() {
   const dispatch = useDispatch();
   const preloaderDone = useSelector((state) => state.ui.preloaderDone);
   const [progress, setProgress] = useState(0);
+
   const containerRef = useRef(null);
-  const ringRef = useRef(null);
-  const textRef = useRef(null);
+  const zoomWrapperRef = useRef(null);
+  const letterHRef = useRef(null);
   const counterRef = useRef(null);
 
   useEffect(() => {
@@ -32,19 +33,23 @@ export function Preloader() {
     let isExiting = false;
     const progressObj = { value: 0 };
 
-    // Continuous rotation of the outer ring
-    if (ringRef.current) {
-      gsap.to(ringRef.current, {
-        rotation: 360,
-        repeat: -1,
-        ease: "none",
-        duration: 8,
-      });
-    }
-
     const playExit = () => {
       if (isExiting) return;
       isExiting = true;
+
+      // Calculate exact center of letter H relative to the zoom wrapper
+      const hEl = letterHRef.current;
+      const wrapEl = zoomWrapperRef.current;
+      if (hEl && wrapEl) {
+        const hRect = hEl.getBoundingClientRect();
+        const wrapRect = wrapEl.getBoundingClientRect();
+        const originX = ((hRect.left + hRect.width / 2 - wrapRect.left) / wrapRect.width) * 100;
+        const originY = ((hRect.top + hRect.height / 2 - wrapRect.top) / wrapRect.height) * 100;
+
+        gsap.set(wrapEl, {
+          transformOrigin: `${originX.toFixed(2)}% ${originY.toFixed(2)}%`,
+        });
+      }
 
       const exitTl = gsap.timeline({
         onComplete: () => {
@@ -57,30 +62,42 @@ export function Preloader() {
       });
 
       exitTl
+        // Ensure progress hits 100%
         .to(progressObj, {
           value: 100,
-          duration: 0.35,
+          duration: 0.25,
           ease: "power2.out",
           onUpdate: () => setProgress(Math.floor(progressObj.value)),
         })
-        .to([textRef.current, ringRef.current], {
-          scale: 1.1,
+        // Fade out numerical counter
+        .to(counterRef.current, {
           opacity: 0,
-          duration: 0.4,
-          ease: "power3.in",
+          y: 16,
+          duration: 0.3,
+          ease: "power2.in",
         })
-        .to(containerRef.current, {
-          opacity: 0,
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-          duration: 0.65,
+        // Zoom in name massive through letter H
+        .to(zoomWrapperRef.current, {
+          scale: 52,
+          duration: 1.15,
           ease: "power3.inOut",
-          onComplete: () => {
-            if (containerRef.current) {
-              containerRef.current.style.display = "none";
-              containerRef.current.style.pointerEvents = "none";
-            }
+        })
+        // Smooth fade out of preloader container revealing home hero section behind the H
+        .to(
+          containerRef.current,
+          {
+            opacity: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            onComplete: () => {
+              if (containerRef.current) {
+                containerRef.current.style.display = "none";
+                containerRef.current.style.pointerEvents = "none";
+              }
+            },
           },
-        }, "-=0.2");
+          "-=0.6"
+        );
     };
 
     const handleAvatarProgress = (e) => {
@@ -101,10 +118,10 @@ export function Preloader() {
 
     window.addEventListener("avatar:progress", handleAvatarProgress);
 
-    // Fallback timer: ensure preloader finishes after at most 2.2s even if offline or instant
+    // Fallback timer: ensure preloader finishes after at most 2.4s even if assets load instantly or offline
     const fallbackTimer = setTimeout(() => {
       playExit();
-    }, 2200);
+    }, 2400);
 
     return () => {
       window.removeEventListener("avatar:progress", handleAvatarProgress);
@@ -118,48 +135,58 @@ export function Preloader() {
     <div
       id="preloader"
       ref={containerRef}
-      className="fixed inset-0 z-[99998] bg-bg flex flex-col items-center justify-center select-none"
-      style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
+      className="fixed inset-0 z-[99998] bg-bg flex flex-col items-center justify-center select-none overflow-hidden"
     >
-      <div className="relative flex flex-col items-center justify-center gap-6">
-        {/* Kinetic Rotating Brand Ring */}
-        <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
-          <svg
-            ref={ringRef}
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            viewBox="0 0 200 200"
+      <div
+        ref={zoomWrapperRef}
+        className="relative flex flex-col items-center justify-center will-change-transform"
+      >
+        {/* ASHOK Name with Real-Time Percentage Color Fill */}
+        <div className="relative text-7xl sm:text-9xl md:text-[11rem] lg:text-[13rem] font-black font-display tracking-tight leading-none flex items-center justify-center select-none">
+          {/* Base Layer: Outlined Letters */}
+          <div
+            className="flex items-center text-transparent"
+            style={{ WebkitTextStroke: "1.5px var(--fg-dim)" }}
           >
-            <path
-              id="preloaderRingPath"
-              d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
-              fill="none"
-            />
-            <text className="font-mono text-[9px] tracking-[0.25em] fill-fg-muted uppercase">
-              <textPath href="#preloaderRingPath" startOffset="0%">
-                ASHOK KUMAR • CREATIVE TECH • AI AGENTS •
-              </textPath>
-            </text>
-          </svg>
+            <span>A</span>
+            <span>S</span>
+            <span ref={letterHRef} className="relative inline-block">
+              H
+            </span>
+            <span>O</span>
+            <span>K</span>
+          </div>
 
-          {/* Central Logo & Numerical Telemetry */}
-          <div ref={textRef} className="flex flex-col items-center justify-center text-center">
-            <span className="font-display font-black text-2xl sm:text-3xl text-fg tracking-tight">
-              A<span className="text-accent">.</span>
-            </span>
-            <span className="font-mono text-xs font-semibold text-accent mt-0.5">
-              {progress.toString().padStart(3, "0")}%
-            </span>
+          {/* Fill Layer: Colored with Accent that fills as Progress increases */}
+          <div
+            className="absolute inset-0 flex items-center text-accent pointer-events-none transition-all duration-75 ease-out"
+            style={{
+              clipPath: `polygon(0 0, ${progress}% 0, ${progress}% 100%, 0 100%)`,
+            }}
+          >
+            <span>A</span>
+            <span>S</span>
+            <span className="relative inline-block">H</span>
+            <span>O</span>
+            <span>K</span>
           </div>
         </div>
 
-        {/* Minimalist Status Bar */}
-        <div ref={counterRef} className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest text-fg-dim">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
-            <span>CALIBRATING ENVIRONMENT</span>
+        {/* Counter and Telemetry Status Bar below the name */}
+        <div
+          ref={counterRef}
+          className="mt-6 flex flex-col items-center gap-2 font-mono text-xs sm:text-sm tracking-widest text-fg-muted"
+        >
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
+            <span className="text-fg-dim font-medium uppercase">INITIALIZING SYSTEM</span>
+            <span className="text-accent font-bold">
+              {progress.toString().padStart(3, "0")}%
+            </span>
           </div>
 
-          <div className="w-40 sm:w-52 h-[1.5px] rounded-full bg-line overflow-hidden">
+          {/* Micro Progress Bar */}
+          <div className="w-36 sm:w-52 h-[1.5px] rounded-full bg-line overflow-hidden">
             <div
               className="h-full bg-accent transition-all duration-100 ease-out shadow-[0_0_8px_var(--accent)]"
               style={{ width: `${progress}%` }}

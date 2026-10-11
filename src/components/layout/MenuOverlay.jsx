@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setMenuOpen } from "../../store/uiSlice";
@@ -7,6 +7,8 @@ import { profile } from "../../data/profile";
 import { GlowKey } from "../ui/GlowKey";
 import { gsap } from "../../lib/gsap";
 import { stopLenis, startLenis } from "../../lib/lenis";
+import { getSoundEnabled, toggleSound } from "../../lib/sfx";
+import { Volume2, VolumeX } from "lucide-react";
 
 export function MenuOverlay() {
   const dispatch = useDispatch();
@@ -14,6 +16,16 @@ export function MenuOverlay() {
   const menuOpen = useSelector((state) => state.ui.menuOpen);
   const overlayRef = useRef(null);
   const linksContainerRef = useRef(null);
+  const [soundActive, setSoundActive] = useState(getSoundEnabled());
+
+  // Listen to SFX state changes
+  useEffect(() => {
+    const handleSfxChange = (e) => {
+      setSoundActive(e.detail);
+    };
+    window.addEventListener("sfx:state-change", handleSfxChange);
+    return () => window.removeEventListener("sfx:state-change", handleSfxChange);
+  }, []);
 
   // Pause smooth scroll when menu is active
   useEffect(() => {
@@ -81,15 +93,40 @@ export function MenuOverlay() {
       }`}
       style={{ clipPath: "circle(0% at calc(100% - 50px) 45px)" }}
     >
-      {/* Top Header Information */}
-      <div className="flex items-center justify-between border-b border-line pb-6">
+      {/* Top Header Information & Audio Toggle */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-6">
         <div className="font-mono text-xs uppercase tracking-widest text-fg-muted">
           NAVIGATION MENU
         </div>
-        <div className="flex items-center gap-2 text-xs font-mono text-fg-muted">
-          <span>PRESS</span>
-          <GlowKey onClick={() => dispatch(setMenuOpen(false))}>ESC</GlowKey>
-          <span>TO CLOSE</span>
+
+        <div className="flex items-center gap-4 text-xs font-mono">
+          {/* Mute / Unmute SFX Toggle Button */}
+          <button
+            onClick={() => {
+              const next = toggleSound();
+              setSoundActive(next);
+            }}
+            aria-label="Toggle Sound Effects"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-line bg-bg-surface/80 hover:border-accent hover:text-accent transition-all text-fg"
+          >
+            {soundActive ? (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-accent" />
+                <span>AUDIO SFX: [ON]</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-fg-dim" />
+                <span>AUDIO SFX: [MUTED]</span>
+              </>
+            )}
+          </button>
+
+          <div className="hidden sm:flex items-center gap-2 text-fg-muted">
+            <span>PRESS</span>
+            <GlowKey onClick={() => dispatch(setMenuOpen(false))}>ESC</GlowKey>
+            <span>TO CLOSE</span>
+          </div>
         </div>
       </div>
 
@@ -135,7 +172,7 @@ export function MenuOverlay() {
         </div>
         <div>
           <span className="text-fg-dim block mb-1">
-            SOURCE CODE & REPOSITORIES
+            SOURCE CODE &amp; REPOSITORIES
           </span>
           <a
             href={profile.contact.github}
@@ -154,3 +191,5 @@ export function MenuOverlay() {
     </div>
   );
 }
+
+export default MenuOverlay;

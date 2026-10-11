@@ -56,7 +56,7 @@ export function Cursor() {
       case "view":
         gsap.to(ring, {
           scale: 3.2,
-          backgroundColor: "rgba(57, 230, 0, 0.95)",
+          backgroundColor: "var(--accent)",
           borderColor: "transparent",
           duration: 0.3,
           ease: "power2.out",
@@ -65,7 +65,7 @@ export function Cursor() {
       case "drag":
         gsap.to(ring, {
           scale: 2.8,
-          backgroundColor: "rgba(45, 107, 255, 0.9)",
+          backgroundColor: "var(--accent)",
           borderColor: "transparent",
           duration: 0.3,
           ease: "power2.out",
@@ -117,7 +117,7 @@ export function Cursor() {
         {cursorText && (
           <span
             ref={cursorTextRef}
-            className="text-[9px] font-mono font-bold tracking-widest text-black uppercase"
+            className="text-[9px] font-mono font-bold tracking-widest text-accent-on uppercase select-none"
           >
             {cursorText}
           </span>

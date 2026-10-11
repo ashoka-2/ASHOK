@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProjectViewMode } from '../../store/uiSlice';
 import { projects } from '../../data/projects';
@@ -9,21 +9,51 @@ import { ProjectRing } from '../projects/ProjectRing';
 import { Layers, Columns, Disc3 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { playClick } from '../../lib/sfx';
+import { getLenis } from '../../lib/lenis';
 
 export function ProjectsSection() {
   const dispatch = useDispatch();
+  const sectionRef = useRef(null);
   const projectViewMode = useSelector((state) => state.ui.projectViewMode);
 
-  // Refresh ScrollTrigger whenever mode toggles to prevent blank screen / stale offsets
+  const handleModeChange = (mode) => {
+    if (mode === projectViewMode) return;
+    playClick();
+
+    // Kill pinned virtual distance and align scroll to section top before switching
+    if (sectionRef.current) {
+      const secEl = sectionRef.current;
+      const targetTop = secEl.getBoundingClientRect().top + window.scrollY;
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(targetTop - 60, { immediate: true });
+      } else {
+        window.scrollTo({ top: Math.max(0, targetTop - 60), behavior: 'instant' });
+      }
+    }
+
+    dispatch(setProjectViewMode(mode));
+
+    // Force ScrollTrigger refresh on next frame
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh(true);
+    });
+    setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 120);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+      ScrollTrigger.refresh(true);
+    }, 150);
     return () => clearTimeout(timer);
   }, [projectViewMode]);
 
   return (
     <section
+      ref={sectionRef}
       data-avatar-shot="far"
       data-avatar-side="left"
       data-avatar-pose="idle"
@@ -42,7 +72,7 @@ export function ProjectsSection() {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center p-1 rounded-full bg-bg-surface border border-line backdrop-blur-md">
             <button
-              onClick={() => dispatch(setProjectViewMode('stack'))}
+              onClick={() => handleModeChange('stack')}
               aria-label="Stack layout view"
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
                 projectViewMode === 'stack'
@@ -55,7 +85,7 @@ export function ProjectsSection() {
             </button>
 
             <button
-              onClick={() => dispatch(setProjectViewMode('horizontal'))}
+              onClick={() => handleModeChange('horizontal')}
               aria-label="Reel slide view"
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
                 projectViewMode === 'horizontal'
@@ -68,7 +98,7 @@ export function ProjectsSection() {
             </button>
 
             <button
-              onClick={() => dispatch(setProjectViewMode('ring'))}
+              onClick={() => handleModeChange('ring')}
               aria-label="3D ring circular wheel view"
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-300 ${
                 projectViewMode === 'ring'

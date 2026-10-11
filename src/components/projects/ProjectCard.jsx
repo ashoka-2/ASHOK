@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCursorState, resetCursorState } from '../../store/uiSlice';
@@ -8,11 +8,21 @@ import { cn } from '../../lib/utils';
 export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetCursorState());
+    };
+  }, [dispatch]);
+
   const handleMouseEnter = () => {
     dispatch(setCursorState({ mode: 'view', text: 'VIEW' }));
   };
 
   const handleMouseLeave = () => {
+    dispatch(resetCursorState());
+  };
+
+  const handleClick = () => {
     dispatch(resetCursorState());
   };
 
@@ -23,9 +33,10 @@ export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
       to={`/projects/${project.slug}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className={cn(
         "group relative block w-full rounded-[28px] sm:rounded-[36px] overflow-hidden border border-line bg-bg-elev transition-all duration-700 ease-out select-none",
-        layout === 'stack' ? 'h-[64vh] sm:h-[72vh] min-h-[480px] sm:min-h-[520px]' : 'h-[520px] sm:h-[600px] w-[320px] sm:w-[480px] flex-shrink-0'
+        layout === 'stack' ? 'h-[64vh] sm:h-[72vh] min-h-[480px] sm:min-h-[520px]' : 'h-[480px] sm:h-[560px] w-full flex-shrink-0'
       )}
       style={{
         '--a': project.accent,
