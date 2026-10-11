@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setCursorState, resetCursorState } from '../../store/uiSlice';
 import { ExternalLink } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { AsciiGlitchRipple } from '../ui/ascii-glitch-ripple';
 
 export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
   const dispatch = useDispatch();
@@ -135,14 +136,24 @@ export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
       {/* 5. Primary Typography & Action Area (Left Side) */}
       <div className="absolute left-6 sm:left-10 bottom-6 sm:bottom-10 right-[38%] xs:right-[42%] sm:right-[45%] md:right-[48%] z-20 flex flex-col gap-2.5 sm:gap-3.5">
         {/* Project Title */}
-        <h3 className="font-display text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-fg group-hover:text-accent transition-colors leading-[0.95]">
+        <AsciiGlitchRipple
+          as="h3"
+          dur={900}
+          spread={1.2}
+          className="font-display text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-fg group-hover:text-accent transition-colors leading-[0.95]"
+        >
           {project.title}
-        </h3>
+        </AsciiGlitchRipple>
 
         {/* One-Liner Summary */}
-        <p className="font-sans text-xs xs:text-sm sm:text-base text-fg-muted leading-relaxed line-clamp-2 max-w-lg">
+        <AsciiGlitchRipple
+          as="p"
+          dur={800}
+          spread={1.0}
+          className="font-sans text-xs xs:text-sm sm:text-base text-fg-muted leading-relaxed line-clamp-2 max-w-lg"
+        >
           {project.oneLiner}
-        </p>
+        </AsciiGlitchRipple>
       </div>
     </Link>
   );

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { playClick, playWhoosh } from '../../lib/sfx';
+import { AsciiGlitchRipple } from '../ui/ascii-glitch-ripple';
 
 export function ProjectRing({ projects }) {
   const [rotation, setRotation] = useState(0);
@@ -161,10 +162,14 @@ export function ProjectRing({ projects }) {
                 {/* Bottom Title & Details */}
                 <div className="relative z-10 pt-1">
                   <h3 className="font-display text-lg sm:text-xl font-bold text-fg truncate">
-                    {project.title}
+                    <AsciiGlitchRipple dur={900} spread={1.2}>
+                      {project.title}
+                    </AsciiGlitchRipple>
                   </h3>
                   <p className="font-mono text-[10px] sm:text-[11px] text-fg-muted line-clamp-1 mt-0.5">
-                    {project.oneLiner}
+                    <AsciiGlitchRipple dur={700} spread={1.0}>
+                      {project.oneLiner}
+                    </AsciiGlitchRipple>
                   </p>
                 </div>
               </div>

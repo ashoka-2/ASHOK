@@ -19,9 +19,9 @@ export function initHeroAnimations({
   const letters = titleRef?.current?.querySelectorAll(".hero-letter");
   const entranceTl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-  if (!prefersReducedMotion && letters && letters.length > 0) {
-    entranceTl
-      .fromTo(
+  if (!prefersReducedMotion) {
+    if (letters && letters.length > 0) {
+      entranceTl.fromTo(
         letters,
         { y: 70, opacity: 0, rotateX: -25 },
         {
@@ -32,7 +32,16 @@ export function initHeroAnimations({
           stagger: 0.035,
           ease: "expo.out",
         },
-      )
+      );
+    } else if (titleRef?.current) {
+      entranceTl.fromTo(
+        titleRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "expo.out" },
+      );
+    }
+
+    entranceTl
       .fromTo(
         metaRef?.current,
         { opacity: 0, y: 20 },
