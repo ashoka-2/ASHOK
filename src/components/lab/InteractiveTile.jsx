@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export function InteractiveTile({ id, title, subtitle, color = '#39E600' }) {
+export function InteractiveTile({ id, title, subtitle, color = '#ed2493' }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
 

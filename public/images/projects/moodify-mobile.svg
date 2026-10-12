@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1100" width="100%" height="100%">
+  <rect width="600" height="1100" rx="44" fill="#12060C" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <rect x="220" y="24" width="160" height="30" rx="15" fill="#000000"/>
+  <text x="50" y="105" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="700">Moodify Wave</text>
+  <rect x="40" y="160" width="520" height="300" rx="20" fill="#220F1A" stroke="#EC4899" stroke-width="1.5"/>
+</svg>

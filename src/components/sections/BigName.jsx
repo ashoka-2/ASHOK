@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { profile } from '../../data/profile';
-import { gsap } from '../../lib/gsap';
+import React, { useRef, useState } from "react";
+import { profile } from "../../data/profile";
+import { gsap } from "../../lib/gsap";
 
 export function BigName() {
   const containerRef = useRef(null);
@@ -23,9 +23,9 @@ export function BigName() {
     const target = textDesktopRef.current;
     if (target) {
       gsap.to(target, {
-        letterSpacing: '0.02em',
+        letterSpacing: "0.02em",
         duration: 0.4,
-        ease: 'power2.out',
+        ease: "power2.out",
       });
     }
   };
@@ -35,9 +35,9 @@ export function BigName() {
     const target = textDesktopRef.current;
     if (target) {
       gsap.to(target, {
-        letterSpacing: '-0.03em',
+        letterSpacing: "-0.03em",
         duration: 0.6,
-        ease: 'elastic.out(1, 0.4)',
+        ease: "elastic.out(1, 0.4)",
       });
     }
   };
@@ -61,9 +61,9 @@ export function BigName() {
           style={{
             backgroundImage: isHovered
               ? `radial-gradient(circle 240px at ${mousePos.x}% ${mousePos.y}%, var(--accent) 0%, transparent 85%)`
-              : 'none',
-            WebkitBackgroundClip: isHovered ? 'text' : 'unset',
-            WebkitTextFillColor: isHovered ? 'transparent' : 'transparent',
+              : "none",
+            WebkitBackgroundClip: isHovered ? "text" : "unset",
+            WebkitTextFillColor: isHovered ? "transparent" : "transparent",
           }}
         >
           {profile.name}
@@ -75,8 +75,8 @@ export function BigName() {
           className="block sm:hidden font-display font-black text-[25vw] leading-[0.8] tracking-[-0.04em] whitespace-nowrap text-outline uppercase transition-all duration-300"
           style={{
             backgroundImage: `radial-gradient(circle 180px at 50% 50%, var(--accent) 0%, transparent 90%)`,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
           {profile.shortName}

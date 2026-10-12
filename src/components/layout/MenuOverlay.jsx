@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMenuOpen } from '../../store/uiSlice';
-import { siteConfig } from '../../data/site';
-import { profile } from '../../data/profile';
-import { GlowKey } from '../ui/GlowKey';
-import { gsap } from '../../lib/gsap';
-import { stopLenis, startLenis } from '../../lib/lenis';
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setMenuOpen } from "../../store/uiSlice";
+import { siteConfig } from "../../data/site";
+import { profile } from "../../data/profile";
+import { GlowKey } from "../ui/GlowKey";
+import { gsap } from "../../lib/gsap";
+import { stopLenis, startLenis } from "../../lib/lenis";
+import { getSoundEnabled, toggleSound } from "../../lib/sfx";
+import { Volume2, VolumeX } from "lucide-react";
 
 export function MenuOverlay() {
   const dispatch = useDispatch();
@@ -14,27 +16,37 @@ export function MenuOverlay() {
   const menuOpen = useSelector((state) => state.ui.menuOpen);
   const overlayRef = useRef(null);
   const linksContainerRef = useRef(null);
+  const [soundActive, setSoundActive] = useState(getSoundEnabled());
+
+  // Listen to SFX state changes
+  useEffect(() => {
+    const handleSfxChange = (e) => {
+      setSoundActive(e.detail);
+    };
+    window.addEventListener("sfx:state-change", handleSfxChange);
+    return () => window.removeEventListener("sfx:state-change", handleSfxChange);
+  }, []);
 
   // Pause smooth scroll when menu is active
   useEffect(() => {
     if (menuOpen) {
       stopLenis();
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       startLenis();
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
   }, [menuOpen]);
 
   // Handle ESC key to close
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && menuOpen) {
+      if (e.key === "Escape" && menuOpen) {
         dispatch(setMenuOpen(false));
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [menuOpen, dispatch]);
 
   // Animate menu open and close
@@ -43,9 +55,9 @@ export function MenuOverlay() {
 
     if (menuOpen) {
       gsap.to(overlayRef.current, {
-        clipPath: 'circle(150% at calc(100% - 50px) 45px)',
+        clipPath: "circle(150% at calc(100% - 50px) 45px)",
         duration: 0.75,
-        ease: 'power4.inOut',
+        ease: "power4.inOut",
       });
 
       if (linksContainerRef.current) {
@@ -58,15 +70,15 @@ export function MenuOverlay() {
             stagger: 0.08,
             duration: 0.6,
             delay: 0.25,
-            ease: 'power3.out',
-          }
+            ease: "power3.out",
+          },
         );
       }
     } else {
       gsap.to(overlayRef.current, {
-        clipPath: 'circle(0% at calc(100% - 50px) 45px)',
+        clipPath: "circle(0% at calc(100% - 50px) 45px)",
         duration: 0.6,
-        ease: 'power4.inOut',
+        ease: "power4.inOut",
       });
     }
   }, [menuOpen]);
@@ -75,19 +87,46 @@ export function MenuOverlay() {
     <div
       ref={overlayRef}
       className={`fixed inset-0 z-45 bg-bg/95 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-16 md:p-24 transition-opacity ${
-        menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        menuOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
       }`}
-      style={{ clipPath: 'circle(0% at calc(100% - 50px) 45px)' }}
+      style={{ clipPath: "circle(0% at calc(100% - 50px) 45px)" }}
     >
-      {/* Top Header Information */}
-      <div className="flex items-center justify-between border-b border-line pb-6">
+      {/* Top Header Information & Audio Toggle */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-6">
         <div className="font-mono text-xs uppercase tracking-widest text-fg-muted">
           NAVIGATION MENU
         </div>
-        <div className="flex items-center gap-2 text-xs font-mono text-fg-muted">
-          <span>PRESS</span>
-          <GlowKey onClick={() => dispatch(setMenuOpen(false))}>ESC</GlowKey>
-          <span>TO CLOSE</span>
+
+        <div className="flex items-center gap-4 text-xs font-mono">
+          {/* Mute / Unmute SFX Toggle Button */}
+          <button
+            onClick={() => {
+              const next = toggleSound();
+              setSoundActive(next);
+            }}
+            aria-label="Toggle Sound Effects"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-line bg-bg-surface/80 hover:border-accent hover:text-accent transition-all text-fg"
+          >
+            {soundActive ? (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-accent" />
+                <span>AUDIO SFX: [ON]</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-fg-dim" />
+                <span>AUDIO SFX: [MUTED]</span>
+              </>
+            )}
+          </button>
+
+          <div className="hidden sm:flex items-center gap-2 text-fg-muted">
+            <span>PRESS</span>
+            <GlowKey onClick={() => dispatch(setMenuOpen(false))}>ESC</GlowKey>
+            <span>TO CLOSE</span>
+          </div>
         </div>
       </div>
 
@@ -108,7 +147,11 @@ export function MenuOverlay() {
               <span className="font-mono text-xs sm:text-sm font-normal text-fg-dim tracking-widest group-hover:text-accent">
                 {item.index}
               </span>
-              <span className={isActive ? "text-accent underline underline-offset-8" : ""}>
+              <span
+                className={
+                  isActive ? "text-accent underline underline-offset-8" : ""
+                }
+              >
                 {item.label}
               </span>
             </Link>
@@ -128,7 +171,9 @@ export function MenuOverlay() {
           </a>
         </div>
         <div>
-          <span className="text-fg-dim block mb-1">SOURCE CODE & REPOSITORIES</span>
+          <span className="text-fg-dim block mb-1">
+            SOURCE CODE &amp; REPOSITORIES
+          </span>
           <a
             href={profile.contact.github}
             target="_blank"
@@ -146,3 +191,5 @@ export function MenuOverlay() {
     </div>
   );
 }
+
+export default MenuOverlay;

@@ -1,5 +1,53 @@
 export const projects = [
   {
+    slug: "snap2bill",
+    index: "01",
+    title: "Snap2Bill",
+    category: ["AI / Computer Vision", "Fintech / SaaS", "Flutter"],
+    oneLiner: "AI-powered retail billing, instant product recognition from photos & social shopkeeper ecosystem.",
+    overview: "Snap2Bill revolutionizes retail operations for physical shopkeepers. Combining on-device and cloud computer vision with instant POS invoicing, it enables instant item recognition directly from camera captures, automated GST calculations, inventory reconciliation, customer ledger tracking, and an Instagram-style community discovery feed for merchants.",
+    role: "Lead Full Stack & Mobile Engineer",
+    year: "2025 - 2026",
+    status: "Completed & Active",
+    features: [
+      "AI camera product recognition & automatic barcode/photo classification",
+      "One-click GST and non-GST compliant invoice generation with instant PDF export",
+      "Instagram-style merchant product explore feed with likes, bookmarks & seller follows",
+      "Real-time shopkeeper-to-customer messaging & notification infrastructure via WebSockets",
+      "Full offline-first caching for seamless continuous billing during network interruptions",
+      "Automated stock level depletion warnings and vendor reorder recommendations",
+      "Comprehensive multi-tenant admin management portal with revenue analytics",
+      "Custom machine learning dataset training workflow for new shop items"
+    ],
+    stack: ["Flutter", "Django", "Python", "Computer Vision", "MySQL", "SQLite", "WebSockets"],
+    concepts: ["Computer Vision POS", "Real-Time Invoicing", "Retail Social Graph", "Offline Sync"],
+    links: {
+      github: "https://github.com/ashoka-2/snap2bill",
+      live: ""
+    },
+    desktopImage: "/images/projects/snap2bill-desktop.svg",
+    mobileImage: "/images/projects/snap2bill-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/snap2bill-desktop.svg",
+        title: "Snap2Bill Retail & Wholesale Dashboard",
+        caption: "Inventory reconciliation, camera item recognition stream & automated GST billing engine",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/snap2bill-mobile.svg",
+        title: "Mobile POS Invoicing App",
+        caption: "On-device camera viewfinder, barcode detection & instant WhatsApp PDF delivery",
+        aspect: "mobile"
+      }
+    ],
+    cover: {
+      dark: "/images/projects/snap2bill-desktop.svg",
+      light: "/images/projects/snap2bill-desktop.svg"
+    },
+    accent: "#10B981"
+  },
+  {
     slug: "parsu",
     index: "02",
     title: "Parsu AI",
@@ -25,9 +73,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/FullStack",
       live: "https://parsuai.vercel.app/"
     },
+    desktopImage: "/images/projects/parsu-desktop.svg",
+    mobileImage: "/images/projects/parsu-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/parsu-desktop.svg",
+        title: "Autonomous Agent Execution Environment",
+        caption: "Unified LangChain pipeline with live Tavily web grounding and BYOK encryption",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/parsu-mobile.svg",
+        title: "Social Command Center Mobile",
+        caption: "Voice agent interface and 1-click automated social publishing to 7 platforms",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/parsu-dark.webp",
-      light: "/images/projects/parsu-light.webp"
+      dark: "/images/projects/parsu-desktop.svg",
+      light: "/images/projects/parsu-desktop.svg"
     },
     accent: "#20B8CD"
   },
@@ -57,9 +121,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/Capstone",
       live: ""
     },
+    desktopImage: "/images/projects/codespace-desktop.svg",
+    mobileImage: "/images/projects/codespace-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/codespace-desktop.svg",
+        title: "Cloud IDE & Microservices Terminal",
+        caption: "Isolated container sandbox with WebSocket shell streaming and Monaco code editor",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/codespace-mobile.svg",
+        title: "Cluster Telemetry Console",
+        caption: "Real-time AWS EKS and Kubernetes pod status monitoring",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/codespace-dark.webp",
-      light: "/images/projects/codespace-light.webp"
+      dark: "/images/projects/codespace-desktop.svg",
+      light: "/images/projects/codespace-desktop.svg"
     },
     accent: "#8B5CF6"
   },
@@ -88,9 +168,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/Scapegoat",
       live: "https://scapegoatt.vercel.app/"
     },
+    desktopImage: "/images/projects/scapegoat-desktop.svg",
+    mobileImage: "/images/projects/scapegoat-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/scapegoat-desktop.svg",
+        title: "Intelligent Storefront Discovery",
+        caption: "Faceted category filtering, dynamic catalog and contextual AI product suggestions",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/scapegoat-mobile.svg",
+        title: "Mobile Shopping Assistant",
+        caption: "Interactive touch catalog, instant cart drawer and smart checkout",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/scapegoat-dark.webp",
-      light: "/images/projects/scapegoat-light.webp"
+      dark: "/images/projects/scapegoat-desktop.svg",
+      light: "/images/projects/scapegoat-desktop.svg"
     },
     accent: "#F97316"
   },
@@ -118,43 +214,27 @@ export const projects = [
       github: "https://github.com/ashoka-2/FullStack",
       live: "https://chatme-cohort.vercel.app/"
     },
+    desktopImage: "/images/projects/chatme-desktop.svg",
+    mobileImage: "/images/projects/chatme-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/chatme-desktop.svg",
+        title: "Real-Time WebSocket Chat Interface",
+        caption: "Sub-15ms duplex messaging channels, active contact list and typing telemetry",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/chatme-mobile.svg",
+        title: "Mobile Chat Thread & Gestures",
+        caption: "Fluid mobile conversations with presence indicators and quick media attach",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/chatme-dark.webp",
-      light: "/images/projects/chatme-light.webp"
+      dark: "/images/projects/chatme-desktop.svg",
+      light: "/images/projects/chatme-desktop.svg"
     },
     accent: "#06B6D4"
-  },
-   {
-    slug: "snap2bill",
-    index: "01",
-    title: "Snap2Bill",
-    category: ["AI / Computer Vision", "Fintech / SaaS", "Flutter"],
-    oneLiner: "AI-powered retail billing, instant product recognition from photos & social shopkeeper ecosystem.",
-    overview: "Snap2Bill revolutionizes retail operations for physical shopkeepers. Combining on-device and cloud computer vision with instant POS invoicing, it enables instant item recognition directly from camera captures, automated GST calculations, inventory reconciliation, customer ledger tracking, and an Instagram-style community discovery feed for merchants.",
-    role: "Lead Full Stack & Mobile Engineer",
-    year: "2025 - 2026",
-    status: "Completed & Active",
-    features: [
-      "AI camera product recognition & automatic barcode/photo classification",
-      "One-click GST and non-GST compliant invoice generation with instant PDF export",
-      "Instagram-style merchant product explore feed with likes, bookmarks & seller follows",
-      "Real-time shopkeeper-to-customer messaging & notification infrastructure via WebSockets",
-      "Full offline-first caching for seamless continuous billing during network interruptions",
-      "Automated stock level depletion warnings and vendor reorder recommendations",
-      "Comprehensive multi-tenant admin management portal with revenue analytics",
-      "Custom machine learning dataset training workflow for new shop items"
-    ],
-    stack: ["Flutter", "Django", "Python", "Computer Vision", "MySQL", "SQLite", "WebSockets"],
-    concepts: ["Computer Vision POS", "Real-Time Invoicing", "Retail Social Graph", "Offline Sync"],
-    links: {
-      github: "https://github.com/ashoka-2/snap2bill",
-      live: ""
-    },
-    cover: {
-      dark: "/images/projects/snap2bill-dark.webp",
-      light: "/images/projects/snap2bill-light.webp"
-    },
-    accent: "#39E600"
   },
   {
     slug: "moodify",
@@ -179,9 +259,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/FullStack",
       live: "https://moodplay-ai.vercel.app/"
     },
+    desktopImage: "/images/projects/moodify-desktop.svg",
+    mobileImage: "/images/projects/moodify-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/moodify-desktop.svg",
+        title: "Audio-Reactive Frequency Studio",
+        caption: "Live Web Audio API frequency spectrum analyzer and emotion-mapped acoustic playlists",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/moodify-mobile.svg",
+        title: "Mobile Audio Player & Visualizer",
+        caption: "Kinetic soundwave rendering and gesture-controlled audio streaming",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/moodify-dark.webp",
-      light: "/images/projects/moodify-light.webp"
+      dark: "/images/projects/moodify-desktop.svg",
+      light: "/images/projects/moodify-desktop.svg"
     },
     accent: "#EC4899"
   },
@@ -199,7 +295,7 @@ export const projects = [
       "Simultaneous prompt execution against multiple frontier models via async pipelines",
       "Objective automated judge evaluation scoring logical consistency, speed, and accuracy",
       "Interactive side-by-side reasoning visualizer comparing model deduction paths",
-      "Live telemetry telemetry displaying tokens/sec, time-to-first-token, and cost metrics",
+      "Live telemetry displaying tokens/sec, time-to-first-token, and cost metrics",
       "Algorithmic challenge suite spanning data structures, system design, and creative logic"
     ],
     stack: ["React", "Python", "FastAPI", "Multi-LLM APIs", "Tailwind CSS"],
@@ -208,9 +304,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/FullStack",
       live: ""
     },
+    desktopImage: "/images/projects/battlearena-desktop.svg",
+    mobileImage: "/images/projects/battlearena-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/battlearena-desktop.svg",
+        title: "Frontier Model Benchmarking Arena",
+        caption: "Parallel asynchronous evaluation, deduction path visualizer and automated judge scoring",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/battlearena-mobile.svg",
+        title: "Mobile Evaluation Telemetry",
+        caption: "Real-time token metrics, latency benchmarks and head-to-head win-rate charts",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/battlearena-dark.webp",
-      light: "/images/projects/battlearena-light.webp"
+      dark: "/images/projects/battlearena-desktop.svg",
+      light: "/images/projects/battlearena-desktop.svg"
     },
     accent: "#EF4444"
   },
@@ -237,9 +349,25 @@ export const projects = [
       github: "https://github.com/ashoka-2/FullStack",
       live: ""
     },
+    desktopImage: "/images/projects/movieplatform-desktop.svg",
+    mobileImage: "/images/projects/movieplatform-mobile.svg",
+    images: [
+      {
+        url: "/images/projects/movieplatform-desktop.svg",
+        title: "Cinema Streaming & Discovery Hub",
+        caption: "TMDB API live trending feeds, high-definition trailer playback modal and watchlists",
+        aspect: "desktop"
+      },
+      {
+        url: "/images/projects/movieplatform-mobile.svg",
+        title: "Mobile Cinema Browse Experience",
+        caption: "Genre-based discovery ribbons, movie poster carousel and instant bookmarking",
+        aspect: "mobile"
+      }
+    ],
     cover: {
-      dark: "/images/projects/movieplatform-dark.webp",
-      light: "/images/projects/movieplatform-light.webp"
+      dark: "/images/projects/movieplatform-desktop.svg",
+      light: "/images/projects/movieplatform-desktop.svg"
     },
     accent: "#F59E0B"
   }

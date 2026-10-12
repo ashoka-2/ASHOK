@@ -1,40 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { profile } from '../../data/profile';
 import { SectionLabel } from '../ui/SectionLabel';
-import { Button } from '../ui/Button';
-import { gsap } from '../../lib/gsap';
-import { ArrowUpRight } from 'lucide-react';
+import { ScrollTextReveal } from '../effects/ScrollTextReveal';
 
 export function Intro() {
   const sectionRef = useRef(null);
-  const wordsRef = useRef([]);
-
-  const statementWords = profile.statement.split(' ');
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Word-by-word scroll-scrubbed reveal
-      if (wordsRef.current.length > 0) {
-        gsap.fromTo(
-          wordsRef.current,
-          { opacity: 0.15, y: 5 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.05,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 75%',
-              end: 'center 45%',
-              scrub: 0.8,
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
@@ -46,18 +16,14 @@ export function Intro() {
     >
       <SectionLabel number="00" label="PHILOSOPHY & CRAFT" />
 
-      {/* Large Statement with Scrubbed Word Opacity */}
-      <h2 className="font-display font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight text-fg max-w-[1200px] mb-16">
-        {statementWords.map((word, index) => (
-          <span
-            key={index}
-            ref={(el) => (wordsRef.current[index] = el)}
-            className="inline-block mr-[0.28em] transition-colors"
-          >
-            {word}
-          </span>
-        ))}
-      </h2>
+      {/* Large Statement with Liquid Gooey Reveal */}
+      <div className="max-w-[1200px] mb-16">
+        <ScrollTextReveal>
+          <p className="text-fg font-display leading-[1.1] tracking-tight">
+            {profile.statement}
+          </p>
+        </ScrollTextReveal>
+      </div>
 
       {/* Meta Information Strip & About Action */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-8 border-t border-line text-xs font-mono">
@@ -76,12 +42,16 @@ export function Intro() {
           <span className="text-fg font-medium">{profile.location}</span>
         </div>
 
-        <div className="flex sm:justify-end items-center">
-          <Button to="/about" variant="secondary" size="sm" iconRight={<ArrowUpRight className="w-4 h-4" />}>
-            Read Biography
-          </Button>
+        <div>
+          <span className="text-fg-dim block mb-1">STATUS</span>
+          <span className="text-accent font-medium flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            {profile.availability}
+          </span>
         </div>
       </div>
     </section>
   );
 }
+
+export default Intro;

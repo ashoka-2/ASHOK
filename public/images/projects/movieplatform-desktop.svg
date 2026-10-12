@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%">
+  <rect width="1600" height="1000" fill="#120E06"/>
+  <rect x="40" y="30" width="1520" height="940" rx="24" fill="#1C160B" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+  <text x="170" y="65" fill="#BA9E69" font-family="system-ui, sans-serif" font-size="14" font-weight="600">MoviePlatform Cinema Streaming Experience</text>
+  <rect x="80" y="120" width="1440" height="800" rx="18" fill="#171208"/>
+  <rect x="120" y="160" width="1360" height="360" rx="16" fill="#251E10" stroke="#F59E0B" stroke-width="1"/>
+</svg>

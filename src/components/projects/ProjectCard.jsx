@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCursorState, resetCursorState } from '../../store/uiSlice';
 import { ExternalLink } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { AsciiGlitchRipple } from '../ui/ascii-glitch-ripple';
 
 export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetCursorState());
+    };
+  }, [dispatch]);
 
   const handleMouseEnter = () => {
     dispatch(setCursorState({ mode: 'view', text: 'VIEW' }));
   };
 
   const handleMouseLeave = () => {
+    dispatch(resetCursorState());
+  };
+
+  const handleClick = () => {
     dispatch(resetCursorState());
   };
 
@@ -23,83 +34,129 @@ export function ProjectCard({ project, index, total = 8, layout = 'stack' }) {
       to={`/projects/${project.slug}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className={cn(
-        "group relative block w-full rounded-[36px] sm:rounded-[40px] overflow-hidden border border-line bg-bg-elev transition-all duration-700 ease-out select-none",
-        layout === 'stack' ? 'h-[64vh] sm:h-[72vh] min-h-[480px]' : 'h-[520px] sm:h-[600px] w-[320px] sm:w-[480px] flex-shrink-0'
+        "group relative block w-full rounded-[28px] sm:rounded-[36px] overflow-hidden border border-line bg-bg-elev transition-all duration-700 ease-out select-none",
+        layout === 'stack' ? 'h-[64vh] sm:h-[72vh] min-h-[480px] sm:min-h-[520px]' : 'h-[480px] sm:h-[560px] w-full flex-shrink-0'
       )}
       style={{
         '--a': project.accent,
       }}
     >
-      {/* 1. Radiant Background Gradient (.cv) */}
+      {/* 1. Desktop Project Image in Background (Low Opacity + Grain + Blend) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <img
+          src={project.desktopImage || project.cover.dark}
+          alt={`${project.title} Desktop`}
+          className="w-full h-full object-cover object-top opacity-20 sm:opacity-25 mix-blend-luminosity group-hover:scale-105 group-hover:opacity-30 transition-all duration-1000 ease-out"
+          loading="lazy"
+        />
+        {/* Subtle grain texture overlay specifically over the desktop background */}
+        <div
+          className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+          }}
+        />
+        {/* Directional gradient veil ensuring text readability while preserving atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-elev/95 via-bg-elev/80 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-elev via-bg-elev/60 to-transparent pointer-events-none" />
+      </div>
+
+      {/* 2. Soft Ambient Per-Project Glow (Retains Accent Color Identity) */}
       <div
-        className="absolute inset-0 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 ease-out pointer-events-none"
+        className="absolute inset-0 opacity-60 group-hover:opacity-85 transition-opacity duration-700 ease-out pointer-events-none"
         style={{
-          background: `radial-gradient(65% 75% at 95% 5%, color-mix(in srgb, ${project.accent} 65%, transparent), transparent 70%), radial-gradient(45% 55% at 5% 95%, color-mix(in srgb, ${project.accent} 22%, transparent), transparent 70%)`
+          background: `radial-gradient(55% 65% at 95% 10%, color-mix(in srgb, ${project.accent} 40%, transparent), transparent 70%), radial-gradient(40% 50% at 5% 95%, color-mix(in srgb, ${project.accent} 15%, transparent), transparent 70%)`
         }}
       />
 
-      {/* 2. Top Right Index Counter (.ix) */}
-      <div className="absolute top-6 sm:top-8 right-6 sm:right-8 z-20 flex items-center gap-3">
-        <span className="font-mono text-xs sm:text-sm tracking-widest text-fg-muted font-medium">
-          {project.index}/{String(total).padStart(2, '0')}
-        </span>
-
-        {/* ONLY show live redirect icon if project is hosted */}
-        {hasLive && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              window.open(project.links.live, '_blank', 'noopener,noreferrer');
-            }}
-            title={`Visit ${project.title} Live`}
-            className="w-8 h-8 rounded-full border border-line bg-bg/60 backdrop-blur-md flex items-center justify-center text-accent hover:bg-accent hover:text-black transition-all z-30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-          </button>
-        )}
-      </div>
-
-      {/* 3. Floating 3D Tilted Glass Card (.gl) */}
-      <div className="absolute right-[6%] sm:right-[8%] bottom-[8%] sm:bottom-[10%] w-[min(46%,340px)] aspect-[4/5] rounded-[24px] sm:rounded-[28px] bg-bg/40 backdrop-blur-xl border border-line/80 p-4 sm:p-5 flex flex-col gap-2.5 rotate-[4deg] group-hover:rotate-0 group-hover:-translate-y-3 transition-transform duration-700 ease-out shadow-2xl pointer-events-none">
-        <div className="h-2.5 rounded-full w-1/2" style={{ backgroundColor: project.accent, opacity: 0.9 }} />
-        <div className="flex-1 rounded-[16px] overflow-hidden relative border border-line/40 my-1" style={{ backgroundColor: `color-mix(in srgb, ${project.accent} 18%, transparent)` }}>
-          <img
-            src={project.cover.dark}
-            alt={project.title}
-            className="w-full h-full object-cover object-top opacity-85 group-hover:opacity-100 transition-opacity"
-          />
-        </div>
-        <div className="h-2 rounded-full w-3/4 bg-line/60" />
-        <div className="h-2 rounded-full w-2/5 bg-line/40" />
-      </div>
-
-      {/* 4. Text Information Area (.tx) */}
-      <div className="absolute left-6 sm:left-12 bottom-6 sm:bottom-12 right-[48%] sm:right-[46%] z-20 flex flex-col gap-3">
-        {/* Category Tags */}
-        <div className="flex flex-wrap gap-2">
+      {/* 3. Top Header Bar: Category Badges & Live Status */}
+      <div className="absolute top-6 sm:top-8 left-6 sm:left-10 right-6 sm:right-10 z-20 flex items-center justify-between pointer-events-none">
+        {/* Category Pills */}
+        <div className="flex flex-wrap items-center gap-2">
           {project.category.slice(0, 2).map((c) => (
             <span
               key={c}
-              className="px-3 py-1 rounded-full border border-line text-[11px] font-mono tracking-wider uppercase bg-bg/50 backdrop-blur-sm text-fg-muted"
+              className="px-3 py-1 rounded-full border border-line text-[11px] font-mono tracking-wider uppercase bg-bg-surface/85 backdrop-blur-md text-fg-muted font-medium"
             >
               {c}
             </span>
           ))}
         </div>
 
-        {/* Title */}
-        <h3 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-fg group-hover:text-accent transition-colors leading-[0.95]">
-          {project.title}
-        </h3>
+        {/* Top Right: Index Counter & External Link */}
+        <div className="flex items-center gap-3 pointer-events-auto">
+          <span className="font-mono text-xs sm:text-sm tracking-widest text-fg-muted font-semibold">
+            {project.index}/{String(total).padStart(2, '0')}
+          </span>
 
-        {/* Subtitle / One-Liner */}
-        <p className="font-mono text-xs sm:text-sm text-fg-muted leading-relaxed line-clamp-2">
+          {hasLive && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(project.links.live, '_blank', 'noopener,noreferrer');
+              }}
+              title={`Visit ${project.title} Live`}
+              className="w-8 h-8 rounded-full border border-line bg-bg-surface/90 backdrop-blur-md flex items-center justify-center text-accent hover:bg-accent hover:text-black transition-all z-30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* 4. Floating Mobile Frame on the Right (Showcasing the Mobile Screenshot) */}
+      <div className="absolute right-[5%] sm:right-[7%] bottom-[6%] sm:bottom-[8%] w-[150px] xs:w-[180px] sm:w-[240px] md:w-[280px] lg:w-[320px] aspect-[9/16] rounded-[22px] sm:rounded-[28px] bg-bg-surface/85 backdrop-blur-xl border border-line/80 p-2 sm:p-3 flex flex-col rotate-[3deg] group-hover:rotate-0 group-hover:-translate-y-2 transition-all duration-700 ease-out shadow-floating pointer-events-none z-10">
+        {/* Device Top Pill / Speaker */}
+        <div className="flex items-center justify-center py-1 sm:py-1.5 mb-1 sm:mb-2">
+          <div className="w-10 sm:w-16 h-1 sm:h-1.5 rounded-full bg-fg-dim/40" />
+        </div>
+
+        {/* Screen Content: Mobile Page Image */}
+        <div className="flex-1 rounded-[14px] sm:rounded-[18px] overflow-hidden relative border border-line/30 bg-bg">
+          <img
+            src={project.mobileImage || project.cover.dark}
+            alt={`${project.title} Mobile Screen`}
+            className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
+            loading="lazy"
+          />
+          {/* Subtle mobile screen glare reflection */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
+        </div>
+
+        {/* Device Bottom Indicator */}
+        <div className="flex items-center justify-center pt-1.5 sm:pt-2">
+          <div className="w-12 sm:w-16 h-1 rounded-full bg-fg-dim/30" />
+        </div>
+      </div>
+
+      {/* 5. Primary Typography & Action Area (Left Side) */}
+      <div className="absolute left-6 sm:left-10 bottom-6 sm:bottom-10 right-[38%] xs:right-[42%] sm:right-[45%] md:right-[48%] z-20 flex flex-col gap-2.5 sm:gap-3.5">
+        {/* Project Title */}
+        <AsciiGlitchRipple
+          as="h3"
+          dur={900}
+          spread={1.2}
+          className="font-display text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-fg group-hover:text-accent transition-colors leading-[0.95]"
+        >
+          {project.title}
+        </AsciiGlitchRipple>
+
+        {/* One-Liner Summary */}
+        <AsciiGlitchRipple
+          as="p"
+          dur={800}
+          spread={1.0}
+          className="font-sans text-xs xs:text-sm sm:text-base text-fg-muted leading-relaxed line-clamp-2 max-w-lg"
+        >
           {project.oneLiner}
-        </p>
+        </AsciiGlitchRipple>
       </div>
     </Link>
   );
 }
+
+export default ProjectCard;

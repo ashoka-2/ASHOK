@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1100" width="100%" height="100%">
+  <rect width="600" height="1100" rx="44" fill="#060F12" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <rect x="220" y="24" width="160" height="30" rx="15" fill="#000000"/>
+  <text x="50" y="105" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="700">chatMe</text>
+  <rect x="40" y="160" width="400" height="60" rx="20" fill="#102228"/>
+  <text x="65" y="198" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="15">Low-latency presence online</text>
+  <rect x="160" y="240" width="400" height="60" rx="20" fill="#06B6D4"/>
+  <text x="185" y="278" fill="#060F12" font-family="system-ui, sans-serif" font-size="15" font-weight="600">Connected via Socket.io</text>
+</svg>

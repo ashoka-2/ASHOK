@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { PageShell } from '../components/layout/PageShell';
-import { labExperiments } from '../data/lab';
-import { SectionLabel } from '../components/ui/SectionLabel';
-import { Button } from '../components/ui/Button';
-import { InteractiveTile } from '../components/lab/InteractiveTile';
-import { Play, Sparkles, X, Terminal } from 'lucide-react';
+import React, { useState } from "react";
+import { PageShell } from "../components/layout/PageShell";
+import { labExperiments } from "../data/lab";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { Button } from "../components/ui/Button";
+import { InteractiveTile } from "../components/lab/InteractiveTile";
+import { GooeyReveal } from "../components/effects/ScrollTextReveal";
+import { Play, Sparkles, X, Terminal } from "lucide-react";
 
 export function Lab() {
   const [activeExperiment, setActiveExperiment] = useState(null);
@@ -15,12 +16,14 @@ export function Lab() {
         {/* Page Header */}
         <div className="mb-16">
           <SectionLabel number="03" label="EXPERIMENTAL LABORATORY" />
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[900px]">
+          <GooeyReveal as="h1" className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-fg max-w-[900px]">
             Creative code, shaders & mechanics.
-          </h1>
-          <p className="font-mono text-xs sm:text-sm text-fg-muted mt-4 max-w-[650px] leading-relaxed">
-            A sandbox of interactive prototypes exploring computational design, WebGL point clouds, physics engines, and generative vector mathematics.
-          </p>
+          </GooeyReveal>
+          <GooeyReveal as="p" className="font-mono text-xs sm:text-sm text-fg-muted mt-4 max-w-[650px] leading-relaxed">
+            A sandbox of interactive prototypes exploring computational design,
+            WebGL point clouds, physics engines, and generative vector
+            mathematics.
+          </GooeyReveal>
         </div>
 
         {/* Experiments Grid */}
@@ -113,7 +116,10 @@ export function Lab() {
                   className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center animate-pulse"
                   style={{ backgroundColor: `${activeExperiment.accent}20` }}
                 >
-                  <Sparkles className="w-10 h-10" style={{ color: activeExperiment.accent }} />
+                  <Sparkles
+                    className="w-10 h-10"
+                    style={{ color: activeExperiment.accent }}
+                  />
                 </div>
                 <h4 className="font-display text-2xl font-bold text-fg mb-3">
                   {activeExperiment.title} Active

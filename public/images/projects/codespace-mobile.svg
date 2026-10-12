@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1100" width="100%" height="100%">
+  <rect width="600" height="1100" rx="44" fill="#0C0A14" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <rect x="220" y="24" width="160" height="30" rx="15" fill="#000000"/>
+  <text x="50" y="105" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="700">codeSpace Cloud</text>
+  <rect x="40" y="140" width="520" height="240" rx="20" fill="#181328" stroke="#8B5CF6" stroke-width="1.5"/>
+  <text x="70" y="185" fill="#8B5CF6" font-family="system-ui, sans-serif" font-size="13" font-weight="700">KUBERNETES POD TELEMETRY</text>
+  <text x="70" y="230" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="22" font-weight="700">All Microservices Healthy</text>
+  <text x="70" y="270" fill="#A89ECA" font-family="system-ui, sans-serif" font-size="14">Docker Runtime latency: 12ms</text>
+  <rect x="40" y="410" width="520" height="420" rx="18" fill="#100D1C"/>
+  <text x="70" y="450" fill="#8B5CF6" font-family="monospace" font-size="13">$ skaffold dev --port-forward</text>
+  <text x="70" y="485" fill="#A7F3D0" font-family="monospace" font-size="13">Deploying containers to EKS...</text>
+  <text x="70" y="520" fill="#E2E8F0" font-family="monospace" font-size="13">Watching files for live sync...</text>
+</svg>

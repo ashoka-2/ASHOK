@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%">
+  <rect width="1600" height="1000" fill="#060F12"/>
+  <rect x="40" y="30" width="1520" height="940" rx="24" fill="#0D191D" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+  <text x="170" y="65" fill="#75A6B2" font-family="system-ui, sans-serif" font-size="14" font-weight="600">chatMe Real-Time WebSocket Messenger</text>
+  <rect x="80" y="120" width="340" height="800" rx="16" fill="#0A1417"/>
+  <rect x="440" y="120" width="1080" height="800" rx="16" fill="#0A1417"/>
+  <rect x="480" y="200" width="460" height="60" rx="18" fill="#14262C"/>
+  <text x="505" y="238" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="15">Hey! Is the new WebSocket pipeline live?</text>
+  <rect x="980" y="280" width="500" height="60" rx="18" fill="#06B6D4"/>
+  <text x="1005" y="318" fill="#060F12" font-family="system-ui, sans-serif" font-size="15" font-weight="600">Yes! Sub-15ms latency across all channels.</text>
+</svg>

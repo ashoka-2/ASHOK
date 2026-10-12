@@ -1,6 +1,18 @@
-import React, { useRef, useEffect } from 'react';
-import { profile } from '../../data/profile';
-import { initHeroAnimations } from './heroAnimations';
+import React, { useRef, useEffect } from "react";
+import { profile } from "../../data/profile";
+import { initHeroAnimations } from "./heroAnimations";
+import { MorphText } from "../ui/morph-text";
+
+const HERO_WORDS = [
+  "ASHOK KUMAR",
+  "FRONTEND DEVELOPER",
+  "CREATIVE DEVELOPER",
+  "BACKEND DEVELOPER",
+  "FULL STACK DEVELOPER",
+  "MERN STACK DEVELOPER",
+  "SOFTWARE ENGINEER",
+  "SOFTWARE DEVELOPER",
+];
 
 /**
  * HeroAvatar
@@ -26,20 +38,23 @@ export function HeroAvatar() {
     return cleanup;
   }, []);
 
-  const [firstName, lastName] = profile.name.split(' ');
-
   return (
-    <section id="hero" ref={heroRef} className="relative h-[300vh] w-full select-none">
+    <section
+      id="hero"
+      ref={heroRef}
+      className="relative h-[300vh] w-full select-none"
+    >
       {/* 1. Sticky 100vh Viewport Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between px-4 sm:px-8 pt-20 sm:pt-24 pb-8 pointer-events-none">
-        
         {/* Top Meta Header: Location & Status (z-[30]) */}
         <div className="relative w-full max-w-[1440px] mx-auto flex items-center justify-between z-[30] pointer-events-auto">
           <div className="flex items-center gap-2.5 font-mono text-[10px] tracking-widest text-fg-muted uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span>{profile.contact?.locationDisplay || 'KERALA, IN'}</span>
+            <span>{profile.contact?.locationDisplay || "KERALA, IN"}</span>
             <span className="text-fg-dim">•</span>
-            <span className="text-fg-muted font-medium">3D INTERACTIVE AVATAR</span>
+            <span className="text-fg-muted font-medium">
+              3D INTERACTIVE AVATAR
+            </span>
           </div>
 
           <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] tracking-widest text-fg-dim uppercase">
@@ -48,38 +63,19 @@ export function HeroAvatar() {
           </div>
         </div>
 
-        {/* 2. Giant Outlined Name Behind 3D Avatar (z-[5]) */}
+        {/* 2. Giant Morphing Name & Roles Behind 3D Avatar (z-[5]) */}
         <div
           ref={titleRef}
-          className="absolute top-[48%] left-0 right-0 -translate-y-1/2 w-full text-center pointer-events-auto z-[5] will-change-transform"
+          className="absolute top-[48%] left-0 right-0 -translate-y-1/2 w-full text-center pointer-events-auto z-[5] will-change-transform px-4"
         >
-          <h1 className="font-display font-black text-[13.5vw] sm:text-[14.2vw] leading-[0.82] tracking-[-0.04em] whitespace-nowrap select-none flex justify-center items-center gap-[0.22em] text-outline hover:text-fg transition-colors duration-300">
-            {/* First Name */}
-            <span className="inline-flex">
-              {firstName.split('').map((char, i) => (
-                <span key={`first-${i}`} className="hero-letter inline-block">
-                  {char}
-                </span>
-              ))}
-            </span>
-
-            {/* Last Name */}
-            <span className="inline-flex">
-              {lastName.split('').map((char, i) => (
-                <span key={`last-${i}`} className="hero-letter inline-block">
-                  {char}
-                </span>
-              ))}
-            </span>
-          </h1>
-
-          {/* Subtitle / Role Tagline from central data */}
-          <div ref={metaRef} className="mt-4 sm:mt-6 flex items-center justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-bg-surface/30 backdrop-blur-md border border-line/40 text-xs sm:text-sm font-mono tracking-wider text-fg-muted">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-              <span>{profile.roles}</span>
-            </div>
-          </div>
+          <MorphText
+            words={HERO_WORDS}
+            interval={2600}
+            subtext={profile.roles}
+            fontSize="clamp(2.5rem, 8.8vw, 9rem)"
+            textClassName="font-display font-black tracking-[-0.035em] text-fg uppercase"
+            subtextClassName="font-mono text-xs sm:text-sm text-fg-muted tracking-widest"
+          />
         </div>
 
         {/* Fallback 2D portrait visible only before 3D avatar loads or on weak devices */}
@@ -99,7 +95,9 @@ export function HeroAvatar() {
           {/* Availability Status */}
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-            <span className="text-fg font-medium">AVAILABLE FOR SELECT OPPORTUNITIES</span>
+            <span className="text-fg font-medium">
+              AVAILABLE FOR SELECT OPPORTUNITIES
+            </span>
             <span className="text-fg-dim hidden sm:inline">// 2026</span>
           </div>
 
